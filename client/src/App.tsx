@@ -1,8 +1,17 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import MyOrder from "./pages/MyOrder";
+
 function App() {
   return (
-    <div className="text-5xl text-teal-500 flex justify-center items-center">
-      Hello ReactTS
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/order" element={<MyOrder />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
