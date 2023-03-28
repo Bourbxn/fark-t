@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using server.Models;
 
 namespace server.Controllers;
 
@@ -7,16 +8,17 @@ namespace server.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly ILogger<AuthController> _logger;
+    private readonly ApplicationDbContext _dbContext;
 
-    public AuthController(ILogger<AuthController> logger)
+    public AuthController(ILogger<AuthController> logger, ApplicationDbContext dbContext)
     {
         _logger = logger;
+        _dbContext = dbContext;
     }
 
     [HttpGet("login")]
-    public IEnumerable<string> Get1()
+    public List<Users> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => $"index: {index}")
-        .ToArray();
+        return _dbContext.Users.ToList();
     }
 }

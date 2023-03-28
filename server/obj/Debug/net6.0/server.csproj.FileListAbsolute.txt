@@ -25,7 +25,6 @@
 /Users/bourbxn/Dev/Fark_T/server/obj/Debug/net6.0/server.pdb
 /Users/bourbxn/Dev/Fark_T/server/obj/Debug/net6.0/server.genruntimeconfig.cache
 /Users/bourbxn/Dev/Fark_T/server/obj/Debug/net6.0/ref/server.dll
-/Users/bourbxn/Dev/Fark_T/server/bin/Debug/net6.0/dotenv.net.dll
 /Users/bourbxn/Dev/Fark_T/server/bin/Debug/net6.0/Google.Protobuf.dll
 /Users/bourbxn/Dev/Fark_T/server/bin/Debug/net6.0/Humanizer.dll
 /Users/bourbxn/Dev/Fark_T/server/bin/Debug/net6.0/K4os.Compression.LZ4.dll

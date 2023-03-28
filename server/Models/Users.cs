@@ -1,11 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
 namespace server.Models 
 {
   public class Users
   {
-    public int userId { get; set; }
-    public string? username { get; set; }
-    public string? password { get; set; }
-    public string? telephone { get; set; }
-    public int farkCoin { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid UserId { get; set; }
+    public string? Username { get; set; }
+    public string? Password { get; set; }
+    public string? Telephone { get; set; }
+    public int FarkCoin { get; set; }
   }
 }
