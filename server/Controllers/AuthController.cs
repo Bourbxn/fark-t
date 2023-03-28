@@ -4,7 +4,7 @@ using server.Models;
 namespace server.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api")]
 public class AuthController : ControllerBase
 {
     private readonly ILogger<AuthController> _logger;
@@ -21,4 +21,5 @@ public class AuthController : ControllerBase
     {
         return _dbContext.Users.ToList();
     }
+    
 }
