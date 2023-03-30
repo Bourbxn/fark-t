@@ -22,5 +22,14 @@ public class UserController : ControllerBase
     {
         return await _dbContext.Users.Where(users => users.UserId == id).ToListAsync();
     }
-    
+
+
+    [HttpPost("user/create")]
+    public async Task<ActionResult<Users>> CreateFark(Users user)
+    {
+        _dbContext.Users.Add(user);
+        await _dbContext.SaveChangesAsync();
+        return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+    }
+
 }

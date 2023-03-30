@@ -39,6 +39,10 @@ namespace server.Migrations
 
                     b.HasKey("FarkId");
 
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Farks");
                 });
 
@@ -51,16 +55,24 @@ namespace server.Migrations
                     b.Property<string>("Category")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("LimitAmount")
+                    b.Property<int>("CurrentAmount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("LimitAmount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Restaurant")
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("OrderId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -86,6 +98,36 @@ namespace server.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("server.Models.Farks", b =>
+                {
+                    b.HasOne("server.Models.Orders", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("server.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("server.Models.Orders", b =>
+                {
+                    b.HasOne("server.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

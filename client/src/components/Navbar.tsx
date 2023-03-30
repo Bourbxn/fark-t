@@ -27,9 +27,9 @@ const Navbar: React.FC = () => {
           {open && <CgClose></CgClose>}
         </div>
         <ul
-          className={`md:flex md:items-center md:pb-0 pb-8 md:pt-0 pt-6 absolute md:static bg-dark-ocean md:z-auto z-[-1] left-0 w-full
+          className={`md:flex md:items-center md:pb-0 pb-6 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full
             md:w-auto md:pl-0 pl-12 transition-all ease-in duration-500 md:border-b-0 border-b-2  ${
-              open ? "top-20 opacity-100" : "top-[-500px]"
+              open ? "top-20 opacity-100" : "top-[-490px]"
             }`}
         >
           {paths.map((path) => (

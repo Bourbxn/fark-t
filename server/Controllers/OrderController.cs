@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
+using server.RequestModels;
 
 namespace server.Controllers;
 
@@ -21,23 +22,37 @@ public class OrderController : ControllerBase
     [HttpGet("order")]
     public async Task<ActionResult<List<Orders>>> GetOrders()
     {
-        return await _dbContext.Orders.ToListAsync();
+        return await _dbContext.Orders.Include(o => o.User).ToListAsync();
     } 
     
     //get single order
     [HttpGet("order/{id}")]
-    public async Task<ActionResult<List<Orders>>> GetOrder(Guid id)
+    public async Task<ActionResult<Orders?>> GetOrder(Guid id)
     {
-        return await _dbContext.Orders.Where(orders => orders.OrderId == id).ToListAsync();
+        return await _dbContext.Orders.Include(o => o.User).FirstOrDefaultAsync(orders => orders.OrderId == id);
     }
     
     //create order
     [HttpPost("order/create")]
-    public async Task<ActionResult<Orders>> CreateOrder(Orders order)
+    public async Task<ActionResult<Orders>> CreateOrder(CreateOrderRequest order)
     {
-        _dbContext.Orders.Add(order);
+        var user = await _dbContext.Users.FirstOrDefaultAsync( u=> u.UserId == order.UserId);
+        if(user is null){
+          return BadRequest();
+        }
+
+        var newOrder = new Orders
+        {
+            Restaurant = order.Restaurant,
+            Category = order.Category,
+            LimitAmount = order.LimitAmount,
+            CurrentAmount = order.CurrentAmount,
+            Status = order.Status,
+            User = user
+        };
+        _dbContext.Orders.Add(newOrder);
         await _dbContext.SaveChangesAsync();
-        return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
+        return CreatedAtAction("GetOrder", new { id = newOrder.OrderId }, order); 
     }
 
    //delete order
