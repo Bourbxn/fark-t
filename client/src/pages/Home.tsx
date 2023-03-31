@@ -3,21 +3,21 @@ import { useEffect, useState } from "react";
 import OrderCard from "../components/OrderCard";
 
 interface Order {
-  restaurant: string;
-  category: string;
-  currentAmount: number;
-  limitAmount: number;
-  status: boolean;
-  orderId: string;
-  user: User;
+  Restaurant: string;
+  Category: string;
+  CurrentAmount: number;
+  LimitAmount: number;
+  Status: boolean;
+  OrderId: string;
+  User: User;
 }
 
 interface User {
-  userId: string;
-  username: string;
-  password: string;
-  telephone: string;
-  farkCoin: 3;
+  UserId: string;
+  Username: string;
+  Password: string;
+  Telephone: string;
+  FarkCoin: 3;
 }
 
 const Home = () => {
@@ -27,6 +27,7 @@ const Home = () => {
     axios
       .get<Order[]>(`${import.meta.env.VITE_APP_API}/order`)
       .then((response) => {
+        console.log(response);
         setOrders(response.data);
       })
       .catch((err) => {
@@ -42,16 +43,14 @@ const Home = () => {
     <div className="pt-40 py-10 px-10 text-5xl text-teal-500 space-y-4">
       {orders.map((order, index) => (
         <div key={index} className="">
-          {order.status && (
-            <OrderCard
-              rest={order.restaurant}
-              cate={order.category}
-              curAmt={order.currentAmount}
-              limit={order.limitAmount}
-              owner={order.user.username}
-              orderId={order.orderId}
-            />
-          )}
+          <OrderCard
+            rest={order?.Restaurant || ""}
+            cate={order?.Category || ""}
+            curAmt={order?.CurrentAmount || 0}
+            limit={order?.LimitAmount || 0}
+            owner={order?.User?.Username || ""}
+            orderId={order?.OrderId || ""}
+          />
         </div>
       ))}
     </div>

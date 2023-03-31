@@ -1,5 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using server.Models;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace server.Controllers;
 
@@ -7,19 +13,51 @@ namespace server.Controllers;
 [Route("/api")]
 public class AuthController : ControllerBase
 {
-    private readonly ILogger<AuthController> _logger;
     private readonly ApplicationDbContext _dbContext;
+    public IConfiguration _configuration;
 
-    public AuthController(ILogger<AuthController> logger, ApplicationDbContext dbContext)
+    public AuthController(IConfiguration configuration, ApplicationDbContext dbContext)
     {
-        _logger = logger;
+        _configuration = configuration;
         _dbContext = dbContext;
     }
-
-    [HttpGet("login")]
-    public List<Users> Get()
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> GetUser(string username, string password)
     {
-        return _dbContext.Users.ToList();
+        var user =  await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
+        if (user is null)
+        {
+            return BadRequest();
+        }
+
+        if (password == user.Password)
+        {
+            var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, jwt.Subject),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                new Claim("Id", user.UserId.ToString()),
+                new Claim("Username", user.Username),
+                new Claim("Password", user.Password),
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.key));
+            var login = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                jwt.Issuer,
+                jwt.Audience,
+                claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: login
+            );
+            return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+        }
+        else
+        {
+            return BadRequest();
+        }
     }
     
 }

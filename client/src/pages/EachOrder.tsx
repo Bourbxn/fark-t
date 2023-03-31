@@ -29,6 +29,7 @@ const EachOrder = () => {
     axios
       .get<Order>(`${import.meta.env.VITE_APP_API}/order/${params.id}`)
       .then((response) => {
+        console.log(response.data);
         setOrder(response.data);
       })
       .catch((err) => {

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { getUser } from "../services/Authorize";
 
 interface Props {
   rest: string;
@@ -25,7 +26,7 @@ const OrderCard: React.FC<Props> = ({
         {curAmt}/{limit}
       </div>
       <div>{owner}</div>
-      <Link to={`/order/${orderId}`}>Order</Link>
+      {!(owner === getUser()) && <Link to={`/order/${orderId}`}>Order</Link>}
     </div>
   );
 };

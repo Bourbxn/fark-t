@@ -1,12 +1,16 @@
 import { CgMenu, CgClose } from "react-icons/cg";
 import { MdOutlineNoFood } from "react-icons/md";
 import { useState } from "react";
+import { getUser, logout } from "../services/Authorize";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const paths = [
     { key: 1, name: "Orders", path: "/" },
     { key: 2, name: "My Order", path: "/order" },
   ];
+
+  const navigate = useNavigate();
 
   let [open, setOpen] = useState(false);
 
@@ -42,11 +46,25 @@ const Navbar: React.FC = () => {
               </a>
             </li>
           ))}
-          <li className="md:ml-7 md:my-0 my-7">
-            <button className="font-bold bg-teal-700 text-white px-5 py-2 rounded-lg hover:bg-teal-500 duration-500">
-              Login
-            </button>
-          </li>
+          {!getUser() && (
+            <li className="md:ml-7 md:my-0 my-7">
+              <Link to="/login">
+                <button className="font-bold bg-teal-700 text-white px-5 py-2 rounded-lg hover:bg-teal-500 duration-500">
+                  Login
+                </button>
+              </Link>
+            </li>
+          )}
+          {getUser() && (
+            <li className="md:ml-7 md:my-0 my-7">
+              <button
+                className="font-bold text-teal-700 rounded-lg hover:text-teal-500 duration-500"
+                onClick={() => logout(() => navigate("/login"))}
+              >
+                Logout
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
