@@ -40,19 +40,21 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="pt-40 py-10 px-10 text-5xl text-teal-500 space-y-4">
-      {orders.map((order, index) => (
-        <div key={index} className="">
-          <OrderCard
-            rest={order?.Restaurant || ""}
-            cate={order?.Category || ""}
-            curAmt={order?.CurrentAmount || 0}
-            limit={order?.LimitAmount || 0}
-            owner={order?.User?.Username || ""}
-            orderId={order?.OrderId || ""}
-          />
-        </div>
-      ))}
+    <div className="pt-40 py-10 px-20 text-5xl text-teal-500 space-y-4">
+      <div className="flex flex-wrap gap-16 items-center">
+        {orders.map((order, index) => (
+          <div key={index} className="">
+            <OrderCard
+              rest={order?.Restaurant || ""}
+              cate={order?.Category || ""}
+              curAmt={order?.CurrentAmount || 0}
+              limit={order?.LimitAmount || 0}
+              owner={order?.User?.Username || ""}
+              orderId={order?.OrderId || ""}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

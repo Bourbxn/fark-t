@@ -3,6 +3,7 @@ import { MdOutlineNoFood } from "react-icons/md";
 import { useState } from "react";
 import { getUser, logout } from "../services/Authorize";
 import { Link, useNavigate } from "react-router-dom";
+import { CgAddR } from "react-icons/cg";
 
 const Navbar: React.FC = () => {
   const paths = [
@@ -36,6 +37,16 @@ const Navbar: React.FC = () => {
               open ? "top-20 opacity-100" : "top-[-490px]"
             }`}
         >
+          {getUser() && (
+            <li className="ml-7 md:my-0 my-7">
+              <a
+                href="/neworder"
+                className="text-teal-700 hover:text-teal-500 font-bold duration-500 text-2xl"
+              >
+                <CgAddR></CgAddR>
+              </a>
+            </li>
+          )}
           {paths.map((path) => (
             <li key={path.key} className="md:ml-7 md:my-0 my-7">
               <a

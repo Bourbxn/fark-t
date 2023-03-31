@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { getToken } from "../services/Authorize";
 
 const Register = () => {
-  useState();
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -54,7 +53,7 @@ const Register = () => {
   }, []);
 
   return (
-    <div className=" px-10 w-screen h-screen flex justify-center items-center">
+    <div className="md:pt-0 pt-32 px-10 w-screen h-screen flex justify-center items-center">
       <div className="bg-white p-10 rounded space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold">
           Register

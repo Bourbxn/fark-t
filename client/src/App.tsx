@@ -4,6 +4,7 @@ import EachOrder from "./pages/EachOrder";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import MyOrder from "./pages/MyOrder";
+import NewOrder from "./pages/NewOrder";
 import Register from "./pages/Register";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -26,6 +27,14 @@ function App() {
           element={
             <ProtectedRoute>
               <EachOrder />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/neworder"
+          element={
+            <ProtectedRoute>
+              <NewOrder />
             </ProtectedRoute>
           }
         />
