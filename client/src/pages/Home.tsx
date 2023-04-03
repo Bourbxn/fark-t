@@ -27,7 +27,6 @@ const Home = () => {
     axios
       .get<Order[]>(`${import.meta.env.VITE_APP_API}/order`)
       .then((response) => {
-        console.log(response);
         setOrders(response.data);
       })
       .catch((err) => {
@@ -41,7 +40,7 @@ const Home = () => {
 
   return (
     <div className="pt-40 py-10 px-20 text-5xl text-teal-500 space-y-4">
-      <div className="flex flex-wrap gap-16 items-center">
+      <div className="flex flex-wrap gap-16 md:justify-start justify-center items-center">
         {orders.map((order, index) => (
           <div key={index} className="">
             <OrderCard

@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getToken, getUserId } from "../services/Authorize";
+import { getToken } from "../services/Authorize";
+import { getUserdata } from "../services/Userdata";
 
 const NewOrder = () => {
   const [state, setState] = useState({
@@ -27,7 +28,7 @@ const NewOrder = () => {
       .post(
         `${import.meta.env.VITE_APP_API}/order/create`,
         {
-          UserId: getUserId(),
+          UserId: getUserdata("Id"),
           Restaurant: restaurant,
           Category: category,
           LimitAmount: farkLimit,

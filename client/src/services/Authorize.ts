@@ -30,26 +30,6 @@ export const getToken = () => {
   }
 };
 
-export const getUser = () => {
-  if (window !== undefined) {
-    if (sessionStorage.getItem("user")) {
-      return sessionStorage.getItem("user");
-    } else {
-      return false;
-    }
-  }
-};
-
-export const getUserId = () => {
-  if (window !== undefined) {
-    if (sessionStorage.getItem("userId")) {
-      return sessionStorage.getItem("userId");
-    } else {
-      return false;
-    }
-  }
-};
-
 export const logout = (next: () => void) => {
   if (window !== undefined) {
     sessionStorage.removeItem("token");

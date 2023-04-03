@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { getUser } from "../services/Authorize";
 import { MdFoodBank, MdRestaurantMenu } from "react-icons/md";
-import { HiShoppingCart } from "react-icons/hi";
+import { HiShoppingCart, HiEye } from "react-icons/hi";
+import { getUserdata } from "../services/Userdata";
 
 interface Props {
   rest: string;
@@ -37,14 +37,28 @@ const OrderCard: React.FC<Props> = ({
             {cate}
           </div>
         </div>
-        <div>
-          <button className="md:text-3xl text-xl hover:text-teal-500 duration-500">
-            <HiShoppingCart></HiShoppingCart>
-          </button>
-        </div>
+        {getUserdata("Username") !== owner && (
+          <div>
+            <button className="md:text-3xl text-xl hover:text-teal-500 duration-500">
+              <Link to={`/order/${orderId}`}>
+                <HiShoppingCart></HiShoppingCart>
+              </Link>
+            </button>
+          </div>
+        )}
+        {getUserdata("Username") === owner && (
+          <div>
+            <button className="md:text-3xl text-xl hover:text-teal-500 duration-500">
+              <HiEye></HiEye>
+            </button>
+          </div>
+        )}
       </div>
       <div className="flex justify-between items-center px-6 py-3">
-        <div className="md:text-xl text-base font-semibold">By {owner}</div>
+        <div className="md:text-xl text-base font-semibold">
+          By {getUserdata("Username") === owner && "Me"}{" "}
+          {getUserdata("Username") !== owner && owner}
+        </div>
         <div className="md:text-xl text-base font-bold bg-teal-900 text-white px-4 py-2 rounded-lg">
           {curAmt}/{limit}
         </div>

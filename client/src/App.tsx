@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import EachOrder from "./pages/EachOrder";
+import FarkOrder from "./pages/FarkOrder";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import MyOrder from "./pages/MyOrder";
@@ -26,7 +26,7 @@ function App() {
           path="/order/:id"
           element={
             <ProtectedRoute>
-              <EachOrder />
+              <FarkOrder />
             </ProtectedRoute>
           }
         />

@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { getUser } from "./services/Authorize";
+import { getUserdata } from "./services/Userdata";
 
 interface route {
   children: any;
 }
 
 const ProtectedRoute = ({ children }: route) => {
-  if (!getUser()) {
+  if (!getUserdata("Username")) {
     return <Navigate to={"/login"} replace />;
   }
   return children;

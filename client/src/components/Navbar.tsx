@@ -1,19 +1,48 @@
 import { CgMenu, CgClose } from "react-icons/cg";
 import { MdOutlineNoFood } from "react-icons/md";
-import { useState } from "react";
-import { getUser, logout } from "../services/Authorize";
+import { useEffect, useState } from "react";
+import { logout } from "../services/Authorize";
 import { Link, useNavigate } from "react-router-dom";
 import { CgAddR } from "react-icons/cg";
+import { FaUserCircle } from "react-icons/fa";
+import { GiTwoCoins } from "react-icons/gi";
+import { FiLogOut } from "react-icons/fi";
+import { RiUserSettingsFill } from "react-icons/ri";
+import { getUserdata } from "../services/Userdata";
+import axios from "axios";
+
+interface User {
+  UserId: string;
+  Username: string;
+  Password: string;
+  Telephone: string;
+  FarkCoin: number;
+}
 
 const Navbar: React.FC = () => {
   const paths = [
     { key: 1, name: "Orders", path: "/" },
     { key: 2, name: "My Order", path: "/order" },
   ];
-
   const navigate = useNavigate();
-
   let [open, setOpen] = useState(false);
+
+  const [user, setUser] = useState<User>();
+
+  const fetchData = () => {
+    axios
+      .get<User>(`${import.meta.env.VITE_APP_API}/user/${getUserdata("Id")}`)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [user]);
 
   return (
     <nav className="shadow-lg w-full fixed top-0 lef-0">
@@ -37,8 +66,8 @@ const Navbar: React.FC = () => {
               open ? "top-20 opacity-100" : "top-[-490px]"
             }`}
         >
-          {getUser() && (
-            <li className="ml-7 md:my-0 my-7">
+          {getUserdata("Username") && (
+            <li className="md:my-0 my-7">
               <a
                 href="/neworder"
                 className="text-teal-700 hover:text-teal-500 font-bold duration-500 text-2xl"
@@ -57,7 +86,7 @@ const Navbar: React.FC = () => {
               </a>
             </li>
           ))}
-          {!getUser() && (
+          {!getUserdata("Username") && (
             <li className="md:ml-7 md:my-0 my-7">
               <Link to="/login">
                 <button className="font-bold bg-teal-700 text-white px-5 py-2 rounded-lg hover:bg-teal-500 duration-500">
@@ -66,14 +95,41 @@ const Navbar: React.FC = () => {
               </Link>
             </li>
           )}
-          {getUser() && (
-            <li className="md:ml-7 md:my-0 my-7">
-              <button
-                className="font-bold text-teal-700 rounded-lg hover:text-teal-500 duration-500"
-                onClick={() => logout(() => navigate("/login"))}
+          {getUserdata("Username") && (
+            <li className="dropdown md:dropdown-bottom md:dropdown-end md:ml-7 md:my-0 mb-7">
+              <label tabIndex={0}>
+                <div className="bg-teal-700 rounded-xl flex py-3 px-5  gap-3 text-white justify-center items-center cursor-pointer">
+                  <div className="flex justify-center items-center gap-2 bg-teal-600 text-teal-50 rounded-lg px-3 font-bold">
+                    <GiTwoCoins className="text-lg"></GiTwoCoins>
+                    {user?.FarkCoin}
+                  </div>
+                  <FaUserCircle className=" text-2xl"></FaUserCircle>
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu font-bold p-2 shadow bg-white rounded-xl md:w-52 w-72"
               >
-                Logout
-              </button>
+                <li>
+                  <a className="text-teal-700 hover:text-teal-500">
+                    <span>
+                      <RiUserSettingsFill></RiUserSettingsFill>
+                    </span>
+                    Profile setting
+                  </a>
+                </li>
+                <li className="border-t-2">
+                  <button
+                    className="font-bold text-teal-700 rounded-lg hover:text-teal-500 duration-500"
+                    onClick={() => logout(() => navigate("/login"))}
+                  >
+                    <span>
+                      <FiLogOut></FiLogOut>
+                    </span>
+                    Logout
+                  </button>
+                </li>
+              </ul>
             </li>
           )}
         </ul>
