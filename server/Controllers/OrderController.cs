@@ -32,13 +32,21 @@ public class OrderController : ControllerBase
         return await _dbContext.Orders.Include(o => o.User).FirstOrDefaultAsync(orders => orders.OrderId == id);
     }
     
+    //get my order
+    [HttpGet("myorder/{userId}")]
+    public async Task<ActionResult<List<Orders>>> GetMyOrder(Guid userId)
+    {
+        return await _dbContext.Orders.Where(o=>o.User.UserId == userId).Include(o => o.User).ToListAsync();
+    }
+    
+    
     //create order
     [HttpPost("order/create")]
     public async Task<ActionResult<Orders>> CreateOrder(CreateOrderRequest order)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync( u=> u.UserId == order.UserId);
         if(user is null){
-          return BadRequest();
+            return BadRequest();
         }
 
         var newOrder = new Orders

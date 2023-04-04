@@ -11,4 +11,5 @@ public class Farks
     public string? Menu { get; set; }
     public string? Location { get; set; }
     public Users User { get; set; } = null!;
-    public Orders Order { get; set; } = null!; }
+    public Orders Order { get; set; } = null!; 
+}

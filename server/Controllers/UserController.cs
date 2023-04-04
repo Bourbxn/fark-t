@@ -18,9 +18,9 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("user/{id}")]
-    public async Task<ActionResult<List<Users>>> GetUser(Guid id)
+    public async Task<ActionResult<Users?>> GetUser(Guid id)
     {
-        return await _dbContext.Users.Where(users => users.UserId == id).ToListAsync();
+        return await _dbContext.Users.Where(users => users.UserId == id).FirstOrDefaultAsync();
     }
 
 
