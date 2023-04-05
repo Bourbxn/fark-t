@@ -34,6 +34,7 @@ const Login = () => {
           username,
           next: () => {
             navigate("/");
+            navigate(0);
           },
         });
       })

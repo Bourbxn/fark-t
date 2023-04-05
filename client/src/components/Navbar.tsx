@@ -22,7 +22,8 @@ interface User {
 const Navbar: React.FC = () => {
   const paths = [
     { key: 1, name: "Orders", path: "/" },
-    { key: 2, name: "My Order", path: "/order" },
+    { key: 2, name: "My Order", path: "/myorder" },
+    { key: 3, name: "My Fark", path: "/fark" },
   ];
   const navigate = useNavigate();
   let [open, setOpen] = useState(false);
@@ -41,7 +42,7 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    getUserdata("Username") && fetchData();
   }, [user]);
 
   return (
@@ -101,7 +102,7 @@ const Navbar: React.FC = () => {
                 <div className="bg-teal-700 rounded-xl flex py-3 px-5  gap-3 text-white justify-center items-center cursor-pointer">
                   <div className="flex justify-center items-center gap-2 bg-teal-600 text-teal-50 rounded-lg px-3 font-bold">
                     <GiTwoCoins className="text-lg"></GiTwoCoins>
-                    {user?.FarkCoin}
+                    {user?.FarkCoin || "0"}
                   </div>
                   <FaUserCircle className=" text-2xl"></FaUserCircle>
                 </div>
@@ -115,7 +116,7 @@ const Navbar: React.FC = () => {
                     <span>
                       <RiUserSettingsFill></RiUserSettingsFill>
                     </span>
-                    Profile setting
+                    {getUserdata("Username")}
                   </a>
                 </li>
                 <li className="border-t-2">

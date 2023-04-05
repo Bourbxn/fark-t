@@ -59,7 +59,7 @@ const FarkOrder = () => {
 
   const navigate = useNavigate();
 
-  const submitForm: React.FormEventHandler<HTMLFormElement> | undefined = (
+  const submitForm: React.MouseEventHandler<HTMLButtonElement> | undefined = (
     e: any
   ) => {
     e.preventDefault();
@@ -83,8 +83,8 @@ const FarkOrder = () => {
           () => navigate("/")
         );
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        Swal.fire("Oops...", "Fark coin not enough!", "error");
       });
   };
   useEffect(() => {}, []);
@@ -116,7 +116,7 @@ const FarkOrder = () => {
           </div>
         </div>
 
-        <form onSubmit={submitForm} className="space-y-3 px-10 py-3 ">
+        <form className="space-y-3 px-10 py-3 ">
           <div>
             <div className="text-teal-800 font-semibold pb-1">Menu</div>
             <input
@@ -139,11 +139,12 @@ const FarkOrder = () => {
           </div>
           <br />
           <div className="flex gap-4">
-            <input
-              type="submit"
-              value="FARK ORDER"
+            <button
               className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full"
-            />
+              onClick={submitForm}
+            >
+              FARK-T
+            </button>
             <button className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full">
               <Link to="/">CANCEL</Link>
             </button>

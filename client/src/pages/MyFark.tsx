@@ -1,7 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import OrderCard from "../components/OrderCard";
+import FarkCard from "../components/FarkCard";
 import { getUserdata } from "../services/Userdata";
+
+interface Fark {
+  FarkId: string;
+  Menu: string;
+  Location: string;
+  Status: string;
+  User: User;
+  Order: Order;
+}
 
 interface Order {
   Restaurant: string;
@@ -21,14 +30,17 @@ interface User {
   FarkCoin: 3;
 }
 
-const Home = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+const MyFark = () => {
+  const [farks, setFarks] = useState<Fark[]>([]);
 
   const fetchData = () => {
     axios
-      .get<Order[]>(`${import.meta.env.VITE_APP_API}/order`)
+      .get<Fark[]>(
+        `${import.meta.env.VITE_APP_API}/fark/myfark/${getUserdata("Id")}`
+      )
       .then((response) => {
-        setOrders(response.data);
+        setFarks(response.data);
+        console.log(response.data);
       })
       .catch((err) => {
         alert(err);
@@ -42,18 +54,16 @@ const Home = () => {
   return (
     <div className="pt-40 py-10 px-20 text-5xl text-teal-500 space-y-4">
       <div className="flex flex-wrap gap-16 md:justify-start justify-center items-center">
-        {orders.map((order, index) => (
-          <div key={index}>
-            {order?.Status && order?.User.UserId !== getUserdata("Id") && (
-              <OrderCard
-                rest={order?.Restaurant || ""}
-                cate={order?.Category || ""}
-                curAmt={order?.CurrentAmount || 0}
-                limit={order?.LimitAmount || 0}
-                owner={order?.User?.Username || ""}
-                orderId={order?.OrderId || ""}
-              />
-            )}
+        {farks.map((fark, index) => (
+          <div key={index} className="">
+            <FarkCard
+              FarkId={fark.FarkId}
+              Menu={fark.Menu}
+              Location={fark.Location}
+              User={fark.User}
+              Order={fark.Order}
+              Status={fark.Status}
+            />
           </div>
         ))}
       </div>
@@ -61,4 +71,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MyFark;

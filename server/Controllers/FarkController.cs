@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mysqlx.Crud;
 using server.Models;
 using server.RequestModels;
 
@@ -36,11 +35,28 @@ public class FarkController : ControllerBase
     {
         return await _dbContext.Farks.Where(farks=>farks.User.UserId == userId).Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).ToListAsync();
     }
-    
+
+    [HttpGet("fark/myorder/{orderId}")]
+    public async Task<ActionResult<List<Farks>>> GetFarkOrders(Guid orderId){
+      return await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
+    }
+
+    [HttpPut("fark/status/{orderId}")]
+    public async Task<ActionResult<Farks>> UpdateFarkStatus(Guid orderId, string status){
+      var fark = await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
+      if(fark is null){
+        return BadRequest();
+      }
+      foreach(var item in fark){
+        item.Status = status;
+      }
+      await _dbContext.SaveChangesAsync();
+      return NoContent();
+    }
 
     //create fark
     [HttpPost("fark/create")]
-    public async Task<ActionResult<Orders>> CreateOrder(CreateFarkRequest fark)
+    public async Task<ActionResult<Farks>> CreateOrder(CreateFarkRequest fark)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync( u=> u.UserId == fark.UserId);
         var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == fark.OrderId);

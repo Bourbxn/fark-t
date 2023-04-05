@@ -10,6 +10,7 @@ public class Farks
     public Guid FarkId { get; set; }
     public string? Menu { get; set; }
     public string? Location { get; set; }
+    public string? Status { get; set; }
     public Users User { get; set; } = null!;
     public Orders Order { get; set; } = null!; 
 }

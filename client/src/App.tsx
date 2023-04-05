@@ -3,7 +3,9 @@ import Navbar from "./components/Navbar";
 import FarkOrder from "./pages/FarkOrder";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import MyFark from "./pages/MyFark";
 import MyOrder from "./pages/MyOrder";
+import MyOrderDetails from "./pages/MyOrderDetails";
 import NewOrder from "./pages/NewOrder";
 import Register from "./pages/Register";
 import ProtectedRoute from "./ProtectedRoute";
@@ -15,10 +17,26 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
-          path="/order"
+          path="/myorder"
           element={
             <ProtectedRoute>
               <MyOrder />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/myorder/:id"
+          element={
+            <ProtectedRoute>
+              <MyOrderDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/fark"
+          element={
+            <ProtectedRoute>
+              <MyFark />
             </ProtectedRoute>
           }
         />

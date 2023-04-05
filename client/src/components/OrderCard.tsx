@@ -49,7 +49,9 @@ const OrderCard: React.FC<Props> = ({
         {getUserdata("Username") === owner && (
           <div>
             <button className="md:text-3xl text-xl hover:text-teal-500 duration-500">
-              <HiEye></HiEye>
+              <Link to={`/myorder/${orderId}`}>
+                <HiEye></HiEye>
+              </Link>
             </button>
           </div>
         )}

@@ -20,7 +20,7 @@ const NewOrder = () => {
 
   const navigate = useNavigate();
 
-  const submitForm: React.FormEventHandler<HTMLFormElement> | undefined = (
+  const submitForm: React.MouseEventHandler<HTMLButtonElement> | undefined = (
     e: any
   ) => {
     e.preventDefault();
@@ -42,9 +42,11 @@ const NewOrder = () => {
         }
       )
       .then(() => {
-        Swal.fire("Good job!", "Successfully to Register!", "success").then(
-          () => navigate("/login")
-        );
+        Swal.fire(
+          "Good job!",
+          "Successfully to add new order!",
+          "success"
+        ).then(() => navigate("/login"));
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +60,7 @@ const NewOrder = () => {
         <h1 className="text-center text-5xl text-teal-900 font-bold">
           New Order
         </h1>
-        <form onSubmit={submitForm} className="space-y-3">
+        <form className="space-y-3">
           <div>
             <div className="text-teal-800 font-semibold pb-1">Restaurant</div>
             <input
@@ -93,11 +95,12 @@ const NewOrder = () => {
           </div>
           <br />
           <div className="flex gap-4">
-            <input
-              type="submit"
-              value="NEW ORDER"
+            <button
               className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full"
-            />
+              onClick={submitForm}
+            >
+              NEW ORDER
+            </button>
             <button className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full">
               <Link to="/">CANCEL</Link>
             </button>
