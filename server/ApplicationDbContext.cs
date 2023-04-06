@@ -13,4 +13,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Users> Users { get; set; }
     public DbSet<Orders> Orders { get; set; }
     public DbSet<Farks> Farks { get; set; }
+    public DbSet<Histories> Histories { get; set; }
 }

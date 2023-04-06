@@ -32,16 +32,4 @@ public class UserController : ControllerBase
         return CreatedAtAction("GetUser", new { id = user.UserId }, user);
     }
 
-    [HttpPut("user/addcoin/{id}")]
-    public async Task<ActionResult<Users>> AddFarkCoin(Guid id, int coinAdd)
-    {
-      var user = await _dbContext.Users.FirstOrDefaultAsync( u => u.UserId == id);
-      if(user is null){
-        return BadRequest();
-      }
-      user.FarkCoin += coinAdd;
-      await _dbContext.SaveChangesAsync();
-      return NoContent();
-    }
-
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { logout } from "../services/Authorize";
 import { Link, useNavigate } from "react-router-dom";
 import { CgAddR } from "react-icons/cg";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaHistory } from "react-icons/fa";
 import { GiTwoCoins } from "react-icons/gi";
 import { FiLogOut } from "react-icons/fi";
 import { RiUserSettingsFill } from "react-icons/ri";
@@ -117,6 +117,14 @@ const Navbar: React.FC = () => {
                       <RiUserSettingsFill></RiUserSettingsFill>
                     </span>
                     {getUserdata("Username")}
+                  </a>
+                </li>
+                <li>
+                  <a className="text-teal-700 hover:text-teal-500">
+                    <span>
+                      <FaHistory></FaHistory>
+                    </span>
+                    History
                   </a>
                 </li>
                 <li className="border-t-2">
