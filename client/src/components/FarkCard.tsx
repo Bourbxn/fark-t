@@ -5,6 +5,7 @@ import {
   MdLocationOn,
   MdPhoneIphone,
   MdCancel,
+  MdCheckCircle,
 } from "react-icons/md";
 import { FaMotorcycle } from "react-icons/fa";
 
@@ -79,6 +80,41 @@ const FarkCard: React.FC<Fark> = ({
       });
   };
 
+  const confirmGetOrder =
+    (farkId: string): React.MouseEventHandler<SVGElement> | undefined =>
+    () => {
+      Swal.fire({
+        title: "Are you sure to receive order?",
+        showCancelButton: true,
+        confirmButtonText: "Confirm",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          getOrder(farkId);
+        }
+      });
+    };
+
+  const getOrder = (farkId: string) => {
+    axios
+      .put(
+        `${
+          import.meta.env.VITE_APP_API
+        }/fark/status/${farkId}?status=ORDER_RECEIVED`
+      )
+      .then(() => {
+        Swal.fire(
+          "Good job!",
+          "Your orders have been ordered!",
+          "success"
+        ).then(() => {
+          navigate(0);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="bg-teal-700 text-white rounded-lg shadow-xl border-teal-900 md:w-96 w-60">
       <div className="bg-white text-teal-800 p-6 md:text-2xl text-lg font-semibold flex justify-between">
@@ -109,14 +145,20 @@ const FarkCard: React.FC<Fark> = ({
           </div>
         </div>
         <div>
-          {Status !== "WAIT_ORDER" && (
+          {Status === "WAIT_CONFIRM" && (
             <MdCancel
               className="cursor-pointer text-rose-500 text-3xl"
               onClick={confirmCancel(FarkId)}
             ></MdCancel>
           )}
           {Status === "WAIT_ORDER" && (
-            <FaMotorcycle className="text-3xl text-sky-500" />
+            <div>
+              <MdCheckCircle
+                className="text-3xl text-green-500 cursor-pointer"
+                onClick={confirmGetOrder(FarkId)}
+              />
+              <FaMotorcycle className="text-3xl text-sky-500" />
+            </div>
           )}
         </div>
       </div>

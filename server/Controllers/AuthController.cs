@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
     }
     
     [HttpPost("login")]
-    public async Task<IActionResult> GetUser(string username, string password)
+    public async Task<IActionResult> Login(string username, string password)
     {
         var user =  await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
         if (user is null)

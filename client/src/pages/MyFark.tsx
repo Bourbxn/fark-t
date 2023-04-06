@@ -40,7 +40,6 @@ const MyFark = () => {
       )
       .then((response) => {
         setFarks(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         alert(err);
@@ -56,14 +55,16 @@ const MyFark = () => {
       <div className="flex flex-wrap gap-16 md:justify-start justify-center items-center">
         {farks.map((fark, index) => (
           <div key={index} className="">
-            <FarkCard
-              FarkId={fark.FarkId}
-              Menu={fark.Menu}
-              Location={fark.Location}
-              User={fark.User}
-              Order={fark.Order}
-              Status={fark.Status}
-            />
+            {fark.Status !== "ORDER_RECEIVED" && (
+              <FarkCard
+                FarkId={fark.FarkId}
+                Menu={fark.Menu}
+                Location={fark.Location}
+                User={fark.User}
+                Order={fark.Order}
+                Status={fark.Status}
+              />
+            )}
           </div>
         ))}
       </div>

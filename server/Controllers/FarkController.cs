@@ -41,8 +41,8 @@ public class FarkController : ControllerBase
       return await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
     }
 
-    [HttpPut("fark/status/{orderId}")]
-    public async Task<ActionResult<Farks>> UpdateFarkStatus(Guid orderId, string status){
+    [HttpPut("fark/status/order/{orderId}")]
+    public async Task<ActionResult<Farks>> UpdateFarkStatusByOrder(Guid orderId, string status){
       var fark = await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
       if(fark is null){
         return BadRequest();
@@ -50,6 +50,17 @@ public class FarkController : ControllerBase
       foreach(var item in fark){
         item.Status = status;
       }
+      await _dbContext.SaveChangesAsync();
+      return NoContent();
+    }
+    
+    [HttpPut("fark/status/{id}")]
+    public async Task<ActionResult<Farks>> UpdateFarkStatus(Guid id, string status){
+      var fark = await _dbContext.Farks.Include(f => f.User).Include(f => f.Order).FirstOrDefaultAsync(fark => fark.FarkId == id);
+      if(fark is null){
+        return BadRequest();
+      }
+      fark.Status = status;
       await _dbContext.SaveChangesAsync();
       return NoContent();
     }
