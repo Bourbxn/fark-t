@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class add_database : Migration
+    public partial class add_new_db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,6 +27,32 @@ namespace server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Histories",
+                columns: table => new
+                {
+                    HistoryId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Role = table.Column<string>(type: "longtext", nullable: true),
+                    CoinSpending = table.Column<int>(type: "int", nullable: false),
+                    Restaurant = table.Column<string>(type: "longtext", nullable: true),
+                    Category = table.Column<string>(type: "longtext", nullable: true),
+                    Owner = table.Column<string>(type: "longtext", nullable: true),
+                    Menu = table.Column<string>(type: "longtext", nullable: true),
+                    Location = table.Column<string>(type: "longtext", nullable: true),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Histories", x => x.HistoryId);
+                    table.ForeignKey(
+                        name: "FK_Histories_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -61,6 +87,7 @@ namespace server.Migrations
                     FarkId = table.Column<Guid>(type: "char(36)", nullable: false),
                     Menu = table.Column<string>(type: "longtext", nullable: true),
                     Location = table.Column<string>(type: "longtext", nullable: true),
+                    Status = table.Column<string>(type: "longtext", nullable: true),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false),
                     OrderId = table.Column<Guid>(type: "char(36)", nullable: false)
                 },
@@ -93,6 +120,11 @@ namespace server.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Histories_UserId",
+                table: "Histories",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
@@ -103,6 +135,9 @@ namespace server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Farks");
+
+            migrationBuilder.DropTable(
+                name: "Histories");
 
             migrationBuilder.DropTable(
                 name: "Orders");

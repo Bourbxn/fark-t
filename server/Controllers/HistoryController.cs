@@ -20,8 +20,29 @@ public class HistoryController : ControllerBase {
     [HttpGet("history")]
     public async Task<ActionResult<List<Histories>>> GetHistory()
     {
-      return await _dbContext.Histories.Include(h => h.User).Include(h => h.Order).Include(h => h.Fark).ToListAsync();
+      return await _dbContext.Histories.ToListAsync();
     }
 
+    [HttpPost("history/create")]
+    public async Task<ActionResult<Histories>> CreateHistory(CreateHistoryRequest history)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == history.UserId);
+        if(user is null){
+          return BadRequest();
+        }
+        var newHistory = new Histories{
+          Role = history.Role,
+          CoinSpending = history.CoinSpending,
+          Restaurant = history.Restaurant,
+          Category = history.Category,
+          Owner = history.Owner,
+          Menu = history.Menu,
+          Location = history.Location,
+          User = user
+        };
+        _dbContext.Histories.Add(newHistory);
+        await _dbContext.SaveChangesAsync();
+        return CreatedAtAction("GetHistory", new { id = newHistory.HistoryId}, history);
+    }
 }
 

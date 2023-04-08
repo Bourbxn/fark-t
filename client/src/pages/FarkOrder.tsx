@@ -71,6 +71,7 @@ const FarkOrder = () => {
           UserId: getUserdata("Id"),
           Menu: menu,
           Location: location,
+          Status: "WAIT_CONFIRM",
         },
         {
           headers: {
@@ -80,7 +81,7 @@ const FarkOrder = () => {
       )
       .then(() => {
         Swal.fire("Good job!", "Successfully to Fark Order", "success").then(
-          () => navigate("/")
+          () => navigate("/fark")
         );
       })
       .catch(() => {

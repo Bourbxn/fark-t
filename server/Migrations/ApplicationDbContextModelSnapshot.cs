@@ -55,11 +55,23 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("FarkId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Category")
+                        .HasColumnType("longtext");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("CoinSpending")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Menu")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Owner")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Restaurant")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Role")
                         .HasColumnType("longtext");
@@ -68,10 +80,6 @@ namespace server.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("HistoryId");
-
-                    b.HasIndex("FarkId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("UserId");
 
@@ -153,27 +161,11 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Histories", b =>
                 {
-                    b.HasOne("server.Models.Farks", "Fark")
-                        .WithMany()
-                        .HasForeignKey("FarkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("server.Models.Orders", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("server.Models.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Fark");
-
-                    b.Navigation("Order");
 
                     b.Navigation("User");
                 });

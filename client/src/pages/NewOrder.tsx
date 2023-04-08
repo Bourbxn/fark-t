@@ -46,7 +46,7 @@ const NewOrder = () => {
           "Good job!",
           "Successfully to add new order!",
           "success"
-        ).then(() => navigate("/login"));
+        ).then(() => navigate("/myorder"));
       })
       .catch((err) => {
         console.log(err);

@@ -94,6 +94,7 @@ public class FarkController : ControllerBase
         {
             Menu = fark.Menu,
             Location = fark.Location,
+            Status = fark.Status,
             User = user,
             Order = order,
         };

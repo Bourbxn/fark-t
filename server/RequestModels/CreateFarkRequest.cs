@@ -6,4 +6,5 @@ public class CreateFarkRequest
     public Guid UserId { get; set; }
     public string? Menu { get; set; }
     public string? Location { get; set; }
+    public string? Status { get; set; }
 }

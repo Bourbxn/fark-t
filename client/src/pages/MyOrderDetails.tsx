@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdFoodBank, MdRestaurantMenu, MdCheckCircle } from "react-icons/md";
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -32,12 +32,13 @@ const MyOrderDetails = () => {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const fetchData = () => {
     axios
       .get(`${import.meta.env.VITE_APP_API}/fark/myorder/${params.id}`)
       .then((response) => {
         setFarks(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -78,10 +79,14 @@ const MyOrderDetails = () => {
   };
 
   const isAllOrdersReceived = (farks: fark[]) => {
-    for (let item = 0; item < farks.length; item++) {
+    let item = 0;
+    for (item; item < farks.length; item++) {
       if (farks[item]?.Status !== "ORDER_RECEIVED") {
         return false;
       }
+    }
+    if (item === 0) {
+      return false;
     }
     return true;
   };
@@ -89,7 +94,23 @@ const MyOrderDetails = () => {
   const checkout = () => {
     let fk = 0;
     for (fk; fk < farks.length; fk++);
-    Swal.fire("Checkout!", `You have received ${fk} Farkcoin!`, "success");
+    axios
+      .post(`${import.meta.env.VITE_APP_API}/history/create`, {
+        Role: "ORDER",
+        CoinSpending: fk,
+        Restaurant: location.state.Restaurant,
+        Category: location.state.Category,
+        Menu: null,
+        Location: null,
+        Owner: location.state.Owner,
+        UserId: getUserdata("Id"),
+      })
+      .then(() => {
+        Swal.fire("Checkout!", `You have received ${fk} Farkcoin!`, "success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -109,13 +130,13 @@ const MyOrderDetails = () => {
                 <span className="md:text-3xl text-xl mr-3">
                   <MdFoodBank></MdFoodBank>
                 </span>
-                {farks[0]?.Order.Restaurant}
+                {location?.state.Restaurant}
               </div>
               <div className="flex items-center gap-x-1">
                 <span className="md:text-3xl text-xl mr-3">
                   <MdRestaurantMenu></MdRestaurantMenu>
                 </span>
-                {farks[0]?.Order.Category}
+                {location?.state.Category}
               </div>
             </div>
             <div>

@@ -49,7 +49,14 @@ const OrderCard: React.FC<Props> = ({
         {getUserdata("Username") === owner && (
           <div>
             <button className="md:text-3xl text-xl hover:text-teal-500 duration-500">
-              <Link to={`/myorder/${orderId}`}>
+              <Link
+                to={`/myorder/${orderId}`}
+                state={{
+                  Restaurant: rest,
+                  Category: cate,
+                  Owner: owner,
+                }}
+              >
                 <HiEye></HiEye>
               </Link>
             </button>

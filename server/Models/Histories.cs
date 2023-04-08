@@ -9,8 +9,12 @@ public class Histories
    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
    public Guid HistoryId { get; set; }
    public string? Role { get; set; }
+   public int CoinSpending { get; set; }
+   public string? Restaurant { get; set; }
+   public string? Category { get; set; }
+   public string? Owner { get; set; }
+   public string? Menu { get; set; }
+   public string? Location { get; set; }
    public Users User { get; set; } = null!;
-   public Orders Order { get; set; } = null!;
-   public Farks Fark { get; set; } = null!;
 }
 
