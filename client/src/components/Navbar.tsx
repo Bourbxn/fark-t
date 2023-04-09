@@ -120,12 +120,15 @@ const Navbar: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="text-teal-700 hover:text-teal-500">
+                  <Link
+                    to="/history"
+                    className="text-teal-700 hover:text-teal-500"
+                  >
                     <span>
                       <FaHistory></FaHistory>
                     </span>
                     History
-                  </a>
+                  </Link>
                 </li>
                 <li className="border-t-2">
                   <button
