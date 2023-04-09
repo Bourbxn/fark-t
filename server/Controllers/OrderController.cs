@@ -68,9 +68,13 @@ public class OrderController : ControllerBase
    public async Task<IActionResult> DeleteOrder(Guid id)
    {
        var order = await _dbContext.Orders.FindAsync(id);
-       if (order == null)
+       var farkList = await _dbContext.Farks.Where(f => f.Order.OrderId == id).Include(f => f.Order).ToListAsync();
+       if (order == null || farkList == null)
        {
            return NotFound();
+       }
+       foreach(Farks item in farkList){
+         _dbContext.Farks.Remove(item);
        }
        _dbContext.Orders.Remove(order);
        await _dbContext.SaveChangesAsync();

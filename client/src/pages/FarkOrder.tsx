@@ -80,12 +80,27 @@ const FarkOrder = () => {
         }
       )
       .then(() => {
-        Swal.fire("Good job!", "Successfully to Fark Order", "success").then(
-          () => navigate("/fark")
-        );
-      })
-      .catch(() => {
-        Swal.fire("Oops...", "Fark coin not enough!", "error");
+        axios
+          .post(`${import.meta.env.VITE_APP_API}/history/create`, {
+            Role: "FARK",
+            CoinSpending: -1,
+            Restaurant: order?.Restaurant,
+            Category: order?.Category,
+            Menu: menu,
+            Location: location,
+            Owner: order?.User.Username,
+            UserId: getUserdata("Id"),
+          })
+          .then(() => {
+            Swal.fire(
+              "Good job!",
+              "Successfully to Fark Order",
+              "success"
+            ).then(() => navigate("/fark"));
+          })
+          .catch(() => {
+            Swal.fire("Oops...", "Fark coin not enough!", "error");
+          });
       });
   };
   useEffect(() => {}, []);

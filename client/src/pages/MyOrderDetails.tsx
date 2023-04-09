@@ -92,8 +92,7 @@ const MyOrderDetails = () => {
   };
 
   const checkout = () => {
-    let fk = 0;
-    for (fk; fk < farks.length; fk++);
+    for (var fk = 0; fk < farks.length; fk++);
     axios
       .post(`${import.meta.env.VITE_APP_API}/history/create`, {
         Role: "ORDER",
@@ -106,7 +105,20 @@ const MyOrderDetails = () => {
         UserId: getUserdata("Id"),
       })
       .then(() => {
-        Swal.fire("Checkout!", `You have received ${fk} Farkcoin!`, "success");
+        axios
+          .delete(`${import.meta.env.VITE_APP_API}/order/delete/${params.id}`)
+          .then(() => {
+            Swal.fire(
+              "Checkout!",
+              `You have received ${fk} Farkcoin!`,
+              "success"
+            ).then(() => {
+              navigate("/myorder");
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
