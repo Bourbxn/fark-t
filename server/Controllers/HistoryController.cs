@@ -23,6 +23,12 @@ public class HistoryController : ControllerBase {
       return await _dbContext.Histories.ToListAsync();
     }
 
+    [HttpGet("history/{userId}")]
+    public async Task<ActionResult<List<Histories>>> GetHistoryByUserId(Guid userId)
+    {
+      return await _dbContext.Histories.Where(h => h.User.UserId == userId).Include(h => h.User).ToListAsync();
+    }
+
     [HttpPost("history/create")]
     public async Task<ActionResult<Histories>> CreateHistory(CreateHistoryRequest history)
     {

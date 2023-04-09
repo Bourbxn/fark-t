@@ -57,7 +57,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/history" element={<History />} />
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute>
+              <History />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

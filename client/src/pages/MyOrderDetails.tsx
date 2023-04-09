@@ -105,20 +105,39 @@ const MyOrderDetails = () => {
         UserId: getUserdata("Id"),
       })
       .then(() => {
-        axios
-          .delete(`${import.meta.env.VITE_APP_API}/order/delete/${params.id}`)
-          .then(() => {
-            Swal.fire(
-              "Checkout!",
-              `You have received ${fk} Farkcoin!`,
-              "success"
-            ).then(() => {
-              navigate("/myorder");
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        deleteOrder(fk);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteOrder = (fk: number) => {
+    axios
+      .delete(`${import.meta.env.VITE_APP_API}/order/delete/${params.id}`)
+      .then(() => {
+        addFarkCoin(fk);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addFarkCoin = (fk: number) => {
+    axios
+      .put(
+        `${import.meta.env.VITE_APP_API}/user/addcoin?id=${getUserdata(
+          "Id"
+        )}&coinAdd=${fk}`
+      )
+      .then(() => {
+        Swal.fire(
+          "Checkout!",
+          `You have received ${fk} Farkcoin!`,
+          "success"
+        ).then(() => {
+          navigate("/myorder");
+        });
       })
       .catch((err) => {
         console.log(err);

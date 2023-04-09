@@ -46,16 +46,14 @@ const MyOrder = () => {
       <div className="flex flex-wrap gap-16 md:justify-start justify-center items-center">
         {orders.map((order, index) => (
           <div key={index}>
-            {order?.Status && (
-              <OrderCard
-                rest={order?.Restaurant || ""}
-                cate={order?.Category || ""}
-                curAmt={order?.CurrentAmount || 0}
-                limit={order?.LimitAmount || 0}
-                owner={order?.User?.Username || ""}
-                orderId={order?.OrderId || ""}
-              />
-            )}
+            <OrderCard
+              rest={order?.Restaurant || ""}
+              cate={order?.Category || ""}
+              curAmt={order?.CurrentAmount || 0}
+              limit={order?.LimitAmount || 0}
+              owner={order?.User?.Username || ""}
+              orderId={order?.OrderId || ""}
+            />
           </div>
         ))}
       </div>

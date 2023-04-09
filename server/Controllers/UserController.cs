@@ -23,6 +23,18 @@ public class UserController : ControllerBase
         return await _dbContext.Users.Where(users => users.UserId == id).FirstOrDefaultAsync();
     }
 
+    [HttpPut("user/addcoin")]
+    public async Task<ActionResult<Users?>> AddFarkCoin(Guid id, int coinAdd)
+    {
+      var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == id);
+      if(user is null){
+        return BadRequest();
+      }
+      user.FarkCoin += coinAdd;
+      await _dbContext.SaveChangesAsync();
+      return NoContent();
+    }
+
 
     [HttpPost("user/create")]
     public async Task<ActionResult<Users>> CreateFark(Users user)
