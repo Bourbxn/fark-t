@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { getUserdata } from "../services/Userdata";
 
 interface History {
@@ -15,6 +16,22 @@ interface History {
 const History = () => {
   const [histories, setHistories] = useState<History[]>([]);
 
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const itemsPerPage = 5;
+
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentHistories = histories.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(histories.length / itemsPerPage);
+
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % histories.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
   const fetchData = () => {
     axios
       .get(`${import.meta.env.VITE_APP_API}/history/${getUserdata("Id")}`)
@@ -32,7 +49,7 @@ const History = () => {
   }, []);
 
   return (
-    <div className="pt-40 py-10 px-20 flex justify-center items-center">
+    <div className="md:pt-40 pt-28 py-10 px-20 flex justify-center items-center">
       <div className="rounded shadow-lg w-screen ">
         <div className="px-10 py-8 space-y-2 border-b-2 border-opacity-20">
           <h1 className="font-bold text-2xl text-teal-700">FARKS & ORDERS</h1>
@@ -54,7 +71,7 @@ const History = () => {
               </tr>
             </thead>
             <tbody>
-              {histories.map((history, index) => (
+              {currentHistories.map((history, index) => (
                 <tr
                   key={index}
                   className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
@@ -113,6 +130,19 @@ const History = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-end items-center">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="Previous"
+            renderOnZeroPageCount={null}
+            className="flex md:pr-12 pr-6 py-6 gap-x-3 font-semibold text-gray-400  justify-center items-center"
+            activeClassName="text-teal-500 border-2 border-teal-500 px-2"
+          />
         </div>
       </div>
     </div>
