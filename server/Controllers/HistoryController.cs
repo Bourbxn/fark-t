@@ -17,16 +17,14 @@ public class HistoryController : ControllerBase {
         _dbContext = dbContext;
     }
 
-    [HttpGet("history")]
-    public async Task<ActionResult<List<Histories>>> GetHistory()
-    {
-      return await _dbContext.Histories.ToListAsync();
-    }
-
     [HttpGet("history/{userId}")]
     public async Task<ActionResult<List<Histories>>> GetHistoryByUserId(Guid userId)
     {
-      return await _dbContext.Histories.Where(h => h.User.UserId == userId).Include(h => h.User).ToListAsync();
+      var histories = await _dbContext.Histories.Where(h => h.User.UserId == userId).Include(h => h.User).OrderByDescending(h => h.Date).ToListAsync();
+      if(histories is null){
+        return BadRequest();
+      }
+      return histories;
     }
 
     [HttpPost("history/create")]

@@ -56,17 +56,17 @@ const History = () => {
           </h2>
         </div>
         <div className="overflow-auto rounded shadow">
-          <table className="w-fit overflow-hidden">
+          <table className="w-full overflow-hidden">
             <thead>
               <tr className="border-b-2 font-bold">
-                <th className="text-center p-5">DATE</th>
-                <th className="text-center p-5">ROLE</th>
-                <th className="text-center p-5">RESTAURANT</th>
-                <th className="text-center p-5">CATEGORY</th>
-                <th className="text-center p-5">MENU</th>
-                <th className="text-center p-5">LOCATION</th>
-                <th className="text-center p-5">OWNER</th>
-                <th className="text-center p-5">COIN SPENDING</th>
+                <th className="text-center p-5 tracking-wide">DATE</th>
+                <th className="text-center p-5 tracking-wide">ROLE</th>
+                <th className="text-center p-5 tracking-wide">RESTAURANT</th>
+                <th className="text-center p-5 tracking-wide">CATEGORY</th>
+                <th className="text-center p-5 tracking-wide">MENU</th>
+                <th className="text-center p-5 tracking-wide">LOCATION</th>
+                <th className="text-center p-5 tracking-wide">OWNER</th>
+                <th className="text-center p-5 tracking-wide">COIN SPENDING</th>
               </tr>
             </thead>
             <tbody>
@@ -92,7 +92,7 @@ const History = () => {
                   <td className="text-center p-6 whitespace-nowrap font-semibold text-gray-600">
                     {history?.Category}
                   </td>
-                  <td className="text-center p-6 whitespace-nowrap font-semibold">
+                  <td className="text-center p-6 whitespace-nowrap font-semibold w-1">
                     {history?.Menu === null && (
                       <div className="text-gray-400">-</div>
                     )}

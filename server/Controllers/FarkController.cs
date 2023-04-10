@@ -18,27 +18,33 @@ public class FarkController : ControllerBase
         _dbContext = dbContext;
     }
 
-    [HttpGet("fark")]
-    public async Task<ActionResult<List<Farks>>> GetFarks()
-    {
-        return await _dbContext.Farks.Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).ToListAsync();
-    }
-
     [HttpGet("fark/{id}")]
     public async Task<ActionResult<Farks?>> GetFark(Guid id)
     {
-        return await _dbContext.Farks.Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).FirstOrDefaultAsync(farks => farks.FarkId == id);
+        var fark = await _dbContext.Farks.Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).FirstOrDefaultAsync(farks => farks.FarkId == id);
+        if(fark is null){
+          return BadRequest();
+        }
+        return fark;    
     }
     
     [HttpGet("fark/myfark/{userId}")]
     public async Task<ActionResult<List<Farks>>> GetMyFark(Guid userId)
     {
-        return await _dbContext.Farks.Where(farks=>farks.User.UserId == userId).Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).ToListAsync();
+        var farks = await _dbContext.Farks.Where(farks=>farks.User.UserId == userId).Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).ToListAsync();
+        if(farks is null){
+          return BadRequest();
+        }
+        return farks;
     }
 
     [HttpGet("fark/myorder/{orderId}")]
     public async Task<ActionResult<List<Farks>>> GetFarkOrders(Guid orderId){
-      return await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
+      var farks = await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
+      if(farks is null){
+        return BadRequest();
+      }
+      return farks;
     }
 
     [HttpPut("fark/status/order/{orderId}")]

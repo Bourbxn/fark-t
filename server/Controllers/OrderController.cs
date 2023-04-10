@@ -22,21 +22,33 @@ public class OrderController : ControllerBase
     [HttpGet("order")]
     public async Task<ActionResult<List<Orders>>> GetOrders()
     {
-        return await _dbContext.Orders.Include(o => o.User).ToListAsync();
+        var orders = await _dbContext.Orders.Include(o => o.User).ToListAsync();
+        if(orders is null){
+          return BadRequest();
+        }
+        return orders;
     } 
     
     //get single order
     [HttpGet("order/{id}")]
     public async Task<ActionResult<Orders?>> GetOrder(Guid id)
     {
-        return await _dbContext.Orders.Include(o => o.User).FirstOrDefaultAsync(orders => orders.OrderId == id);
+      var order = await _dbContext.Orders.Include(o => o.User).FirstOrDefaultAsync(orders => orders.OrderId == id);
+      if(order is null){
+        return BadRequest();
+      }
+        return order;
     }
     
     //get my order
     [HttpGet("myorder/{userId}")]
     public async Task<ActionResult<List<Orders>>> GetMyOrder(Guid userId)
     {
-        return await _dbContext.Orders.Where(o=>o.User.UserId == userId).Include(o => o.User).ToListAsync();
+        var orders = await _dbContext.Orders.Where(o=>o.User.UserId == userId).Include(o => o.User).ToListAsync();
+        if(orders is null){
+          return BadRequest();
+        }
+        return orders;
     }
     
     

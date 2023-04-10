@@ -20,7 +20,11 @@ public class UserController : ControllerBase
     [HttpGet("user/{id}")]
     public async Task<ActionResult<Users?>> GetUser(Guid id)
     {
-        return await _dbContext.Users.Where(users => users.UserId == id).FirstOrDefaultAsync();
+        var user = await _dbContext.Users.Where(users => users.UserId == id).FirstOrDefaultAsync();
+        if(user is null){
+          return BadRequest();
+        }
+        return user; 
     }
 
     [HttpPut("user/addcoin")]
