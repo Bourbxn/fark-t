@@ -2,7 +2,7 @@ namespace server.RequestModels;
 
 public class CreateHistoryRequest 
 {
-
+  public DateTime Date { get; set; }
    public string? Role { get; set; }
    public int CoinSpending { get; set; }
    public string? Restaurant { get; set; }

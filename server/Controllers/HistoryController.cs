@@ -37,6 +37,7 @@ public class HistoryController : ControllerBase {
           return BadRequest();
         }
         var newHistory = new Histories{
+          Date = DateTime.Now,
           Role = history.Role,
           CoinSpending = history.CoinSpending,
           Restaurant = history.Restaurant,

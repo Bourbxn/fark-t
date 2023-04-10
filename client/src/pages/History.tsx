@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { getUserdata } from "../services/Userdata";
+import { formatDate } from "../utils/Function";
 
 interface History {
+  Date: string;
   Role: string;
   CoinSpending: number;
   Restaurant: string;
@@ -21,15 +23,11 @@ const History = () => {
   const itemsPerPage = 5;
 
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentHistories = histories.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(histories.length / itemsPerPage);
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % histories.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
   const fetchData = () => {
@@ -49,8 +47,8 @@ const History = () => {
   }, []);
 
   return (
-    <div className="md:pt-40 pt-28 py-10 px-20 flex justify-center items-center">
-      <div className="rounded shadow-lg w-screen ">
+    <div className="md:pt-40 pt-28 py-10 md:px-20 px-8 flex justify-center items-center">
+      <div className="rounded shadow-lg w-screen overflow-hidden">
         <div className="px-10 py-8 space-y-2 border-b-2 border-opacity-20">
           <h1 className="font-bold text-2xl text-teal-700">FARKS & ORDERS</h1>
           <h2 className="font-semibold text-lg text-gray-400">
@@ -58,9 +56,10 @@ const History = () => {
           </h2>
         </div>
         <div className="overflow-auto rounded shadow">
-          <table className="w-full overflow-hidden">
+          <table className="w-fit overflow-hidden">
             <thead>
               <tr className="border-b-2 font-bold">
+                <th className="text-center p-5">DATE</th>
                 <th className="text-center p-5">ROLE</th>
                 <th className="text-center p-5">RESTAURANT</th>
                 <th className="text-center p-5">CATEGORY</th>
@@ -76,6 +75,9 @@ const History = () => {
                   key={index}
                   className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
                 >
+                  <td className="text-center text-sm p-6 whitespace-nowrap font-semibold text-gray-400">
+                    {formatDate(history?.Date)}
+                  </td>
                   <td className="text-center p-6 whitespace-nowrap font-bold text-gray-500">
                     {history?.Role === "FARK" && (
                       <span className="text-rose-500">{history?.Role}</span>

@@ -8,6 +8,7 @@ public class Histories
    [Key]
    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
    public Guid HistoryId { get; set; }
+   public DateTime Date { get; set; }
    public string? Role { get; set; }
    public int CoinSpending { get; set; }
    public string? Restaurant { get; set; }
