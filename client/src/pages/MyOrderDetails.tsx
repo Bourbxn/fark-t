@@ -126,9 +126,9 @@ const MyOrderDetails = () => {
   const addFarkCoin = (fk: number) => {
     axios
       .put(
-        `${import.meta.env.VITE_APP_API}/user/addcoin?id=${getUserdata(
+        `${import.meta.env.VITE_APP_API}/user/addcoin/${getUserdata(
           "Id"
-        )}&coinAdd=${fk}`
+        )}?coinAdd=${fk}`
       )
       .then(() => {
         Swal.fire(

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
+using server.RequestModels;
 
 namespace server.Controllers;
 
@@ -27,7 +28,7 @@ public class UserController : ControllerBase
         return user; 
     }
 
-    [HttpPut("user/addcoin")]
+    [HttpPut("user/addcoin/{id}")]
     public async Task<ActionResult<Users?>> AddFarkCoin(Guid id, int coinAdd)
     {
       var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == id);
@@ -39,6 +40,18 @@ public class UserController : ControllerBase
       return NoContent();
     }
 
+    [HttpPut("user/update/{id}")]
+    public async Task<ActionResult<UpdateUserRequest?>> UpdateUser(Guid id, UpdateUserRequest user)
+    {
+      var userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == id);
+      if(userDb is null){
+        return BadRequest();
+      }
+      userDb.Telephone = user.Telephone;
+      userDb.Password = user.Password;
+      await _dbContext.SaveChangesAsync();
+      return NoContent();
+    }
 
     [HttpPost("user/create")]
     public async Task<ActionResult<Users>> CreateFark(Users user)

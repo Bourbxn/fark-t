@@ -112,12 +112,15 @@ const Navbar: React.FC = () => {
                 className="dropdown-content menu font-bold p-2 shadow bg-white rounded-xl md:w-52 w-72"
               >
                 <li>
-                  <a className="text-teal-700 hover:text-teal-500">
+                  <Link
+                    to="/profile"
+                    className="text-teal-700 hover:text-teal-500"
+                  >
                     <span>
                       <RiUserSettingsFill></RiUserSettingsFill>
                     </span>
                     {getUserdata("Username")}
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link

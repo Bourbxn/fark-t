@@ -59,7 +59,7 @@ const MyFark = () => {
       )}
       <div className="flex flex-wrap gap-16 md:justify-start justify-center items-center">
         {farks.map((fark, index) => (
-          <div key={index} className="">
+          <div key={index}>
             {fark.Status !== "ORDER_RECEIVED" && (
               <FarkCard
                 FarkId={fark.FarkId}
