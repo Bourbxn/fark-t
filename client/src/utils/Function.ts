@@ -11,3 +11,15 @@ export const formatDate = (date: string) => {
   const dateFormat = dd + "/" + mm + "/" + yyyy + " " + time;
   return dateFormat;
 };
+
+export const isTelephoneInvalid = (tel: string) => {
+  if (tel.length > 10) {
+    return true;
+  }
+  const isContainOnlyNum = (str: string) => {
+    return /^\d+$/.test(str);
+  };
+  if (!isContainOnlyNum(tel)) {
+    return true;
+  }
+};

@@ -3148,11 +3148,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/bourbxn/Dev/Fark_T/server/server.csproj",
+      "projectUniqueName": "/Users/bourbxn/Dev/Fark-t_Web/fark-t/server/server.csproj",
       "projectName": "server",
-      "projectPath": "/Users/bourbxn/Dev/Fark_T/server/server.csproj",
+      "projectPath": "/Users/bourbxn/Dev/Fark-t_Web/fark-t/server/server.csproj",
       "packagesPath": "/Users/bourbxn/.nuget/packages/",
-      "outputPath": "/Users/bourbxn/Dev/Fark_T/server/obj/",
+      "outputPath": "/Users/bourbxn/Dev/Fark-t_Web/fark-t/server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/bourbxn/.nuget/NuGet/NuGet.Config"
