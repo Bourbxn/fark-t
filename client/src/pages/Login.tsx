@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { authenticate, getToken } from "../services/Authorize";
+import { CgClose } from "react-icons/cg";
 
 const Login = () => {
   const [state, setState] = useState({
@@ -11,6 +12,8 @@ const Login = () => {
   });
 
   const { username, password } = state;
+
+  const [invalidLogin, setInvalidLogin] = useState(false);
 
   const inputValue = (name: string, event: any) => {
     setState({ ...state, [name]: event.target.value });
@@ -40,11 +43,7 @@ const Login = () => {
       })
       .catch((err) => {
         console.log(err);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Username or Password is incorrect!",
-        });
+        setInvalidLogin(true);
       });
   };
   useEffect(() => {
@@ -55,6 +54,21 @@ const Login = () => {
     <div className="md:pt-0 pt-30 px-10 w-screen h-screen flex justify-center items-center">
       <div className="bg-white p-10 rounded space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold">Login</h1>
+        {invalidLogin && (
+          <div
+            className="bg-rose-100 border-rose-300 border-[1px] w-full text-rose-900 font-semibold p-5 rounded text-sm
+            flex justify-between items-center"
+          >
+            <p>Incorrect username of password</p>
+            <button
+              onClick={() => {
+                setInvalidLogin(false);
+              }}
+            >
+              <CgClose className="text-rose-600 text-base" />
+            </button>
+          </div>
+        )}
         <form onSubmit={submitForm} className="space-y-3">
           <div>
             <div className="text-teal-800 font-semibold pb-1">Username</div>
