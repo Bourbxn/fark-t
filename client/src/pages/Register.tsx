@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getToken } from "../services/Authorize";
+import { isPasswordInvalid, isTelephoneInvalid } from "../utils/Function";
 
 const Register = () => {
   const [state, setState] = useState({
@@ -14,16 +15,46 @@ const Register = () => {
 
   const { username, password, cPassword, telephone } = state;
 
+  const [invalidTel, setInvalidTel] = useState(false);
+  const [invalidPwd, setInvalidPwd] = useState(false);
+  const [invalidCpwd, setInvalidCpwd] = useState(false);
+  const [invalidUsr, setInvalidUsr] = useState(false);
+
   const inputValue = (name: string, event: any) => {
     setState({ ...state, [name]: event.target.value });
   };
 
   const navigate = useNavigate();
 
+  const isInvalidForm = () => {
+    let isInvalid = 0;
+    if (isTelephoneInvalid(telephone)) {
+      setInvalidTel(true);
+      isInvalid++;
+    } else setInvalidTel(false);
+
+    if (isPasswordInvalid(password)) {
+      setInvalidPwd(true);
+      isInvalid++;
+    } else setInvalidPwd(false);
+
+    if (password !== cPassword) {
+      setInvalidCpwd(true);
+      isInvalid++;
+    } else setInvalidCpwd(false);
+    if (isInvalid > 0) {
+      return true;
+    }
+    return false;
+  };
+
   const submitForm: React.FormEventHandler<HTMLFormElement> | undefined = (
     e: any
   ) => {
     e.preventDefault();
+    if (isInvalidForm()) {
+      return;
+    }
     axios
       .post(
         `${import.meta.env.VITE_APP_API}/user/create`,
@@ -46,6 +77,7 @@ const Register = () => {
       })
       .catch((err) => {
         console.log(err);
+        setInvalidUsr(true);
       });
   };
   useEffect(() => {
@@ -58,35 +90,57 @@ const Register = () => {
         <h1 className="text-center text-5xl text-teal-900 font-bold">
           Register
         </h1>
-        <form onSubmit={submitForm} className="space-y-3">
+        <form onSubmit={submitForm} className="space-y-6">
           <div>
             <div className="text-teal-800 font-semibold pb-1">Username</div>
             <input
               type="text"
-              className="rounded border-slate-300 border-[2px] py-2 px-3 w-full"
+              className={`rounded border-[2px] py-2 px-3 w-full ${
+                invalidUsr ? "border-rose-400" : "border-slate-300"
+              }`}
               value={username}
               onChange={(e) => inputValue("username", e)}
               placeholder="username"
             />
+            {invalidUsr && (
+              <div className="absolute text-sm text-rose-400 font-semibold">
+                Username is already taken
+              </div>
+            )}
           </div>
           <div>
             <div className="text-teal-800 font-semibold pb-1">Phone</div>
             <input
               type="text"
-              className="rounded border-slate-300 border-[2px] py-2 px-3 w-full"
+              className={`rounded border-[2px] py-2 px-3 w-full ${
+                invalidTel ? "border-rose-400" : "border-slate-300"
+              }`}
               value={telephone}
               onChange={(e) => inputValue("telephone", e)}
             />
+            {invalidTel && (
+              <div className="absolute text-sm text-rose-400 font-semibold">
+                Invalid telephone number
+              </div>
+            )}
           </div>
           <div>
             <div className="text-teal-800 font-semibold pb-1">Password</div>
             <input
               type="password"
-              className="rounded border-slate-300 border-[2px] py-2 px-3 w-full"
+              className={`rounded border-[2px] py-2 px-3 w-full ${
+                invalidPwd ? "border-rose-400" : "border-slate-300"
+              }`}
               value={password}
               onChange={(e) => inputValue("password", e)}
               placeholder="password"
             />
+            {invalidPwd && (
+              <div className=" text-sm text-rose-400 font-semibold">
+                Password must use at least 8 characters and contains numbers and
+                characters
+              </div>
+            )}
           </div>
           <div>
             <div className="text-teal-800 font-semibold pb-1">
@@ -94,11 +148,18 @@ const Register = () => {
             </div>
             <input
               type="password"
-              className="rounded border-slate-300 border-[2px] py-2 px-3 w-full"
+              className={`rounded border-[2px] py-2 px-3 w-full ${
+                invalidCpwd ? "border-rose-400" : "border-slate-300"
+              }`}
               value={cPassword}
               onChange={(e) => inputValue("cPassword", e)}
               placeholder="confirm password"
             />
+            {invalidCpwd && (
+              <div className=" text-sm text-rose-400 font-semibold">
+                Password are not matching
+              </div>
+            )}
           </div>
 
           <br />

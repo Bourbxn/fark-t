@@ -42,14 +42,20 @@ const EditProfile = () => {
     if (curPassword !== Password) {
       setPwdInvalid(true);
       isInvalid++;
+    } else {
+      setPwdInvalid(false);
     }
     if (isTelephoneInvalid(Telephone)) {
       setTelInvalid(true);
       isInvalid++;
+    } else {
+      setTelInvalid(false);
     }
     if (NewPassword === curPassword) {
       setCpwdInvalid("SAME_PASSWORD");
       isInvalid++;
+    } else {
+      setCpwdInvalid("VALID");
     }
     if (isInvalid > 0) {
       return true;

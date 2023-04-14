@@ -56,6 +56,15 @@ public class UserController : ControllerBase
     [HttpPost("user/create")]
     public async Task<ActionResult<Users>> CreateFark(Users user)
     {
+        var allUserDb = await _dbContext.Users.ToListAsync();
+        if(allUserDb is null){
+          return BadRequest();
+        }
+        foreach(Users u in allUserDb){
+          if(user.Username == u.Username){
+            return BadRequest();
+          }
+        }
         _dbContext.Users.Add(user);
         await _dbContext.SaveChangesAsync();
         return CreatedAtAction("GetUser", new { id = user.UserId }, user);
