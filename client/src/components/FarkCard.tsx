@@ -116,8 +116,8 @@ const FarkCard: React.FC<Fark> = ({
   };
 
   return (
-    <div className="bg-teal-700 text-white rounded-lg shadow-xl border-teal-900 md:w-96 w-60">
-      <div className="bg-white text-teal-800 p-6 md:text-2xl text-lg font-semibold flex justify-between">
+    <div className=" text-white  shadow-xl border-teal-900 md:w-96 w-60">
+      <div className="bg-white text-teal-800 p-6 md:text-2xl rounded-t-lg text-lg font-semibold flex justify-between">
         <div className="space-y-2 pb-6">
           <div className="flex items-center gap-x-2">
             <span className="md:text-3xl text-xl">
@@ -162,7 +162,7 @@ const FarkCard: React.FC<Fark> = ({
           )}
         </div>
       </div>
-      <div className="flex justify-between items-center px-6 py-3">
+      <div className="flex justify-between items-center px-6 py-3 rounded-b-lg bg-teal-700">
         <div className="md:text-xl text-base font-semibold space-y-2">
           <div className="flex items-center gap-x-2">
             <span className="md:text-2xl text-xl">

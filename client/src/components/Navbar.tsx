@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
           <span className="mr-2 text-teal-700 text-4xl">
             <MdOutlineNoFood></MdOutlineNoFood>
           </span>
-          Fark-T
+          FARK-T
         </div>
         <div
           className="text-teal-700 absolute right-8 top-7 text-3xl cursor-pointer md:hidden"

@@ -94,7 +94,7 @@ const EditProfile = () => {
   }, []);
 
   return (
-    <div className="md:pt-20 pt-32 px-10 w-screen h-screen flex justify-center items-center">
+    <div className="md:pt-20 pt-32 px-10 w-screen h-screen flex justify-center items-center bg-gray-100">
       <div className="bg-white p-10 rounded space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold">
           Profile

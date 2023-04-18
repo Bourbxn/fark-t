@@ -51,7 +51,7 @@ const Login = () => {
 
   return (
     <div className=" px-10 w-screen min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="bg-white p-10 rounded space-y-5 shadow-lg w-[30rem]">
+      <div className="bg-white p-10 rounded-lg space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold">Login</h1>
         {invalidLogin && (
           <div

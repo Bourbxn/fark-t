@@ -150,9 +150,9 @@ const MyOrderDetails = () => {
 
   return (
     <div>
-      <div className="md:pt-0 mt-40 mb-20 px-10 flex justify-center items-center">
-        <div className="bg-white rounded space-y-5 shadow-lg w-[30rem]">
-          <h1 className="text-center text-5xl text-teal-900 font-bold">
+      <div className="md:pt-0 pt-40 mb-20 px-10 flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="bg-white rounded-lg space-y-5 shadow-lg w-[30rem]">
+          <h1 className="text-center text-5xl text-teal-900 font-bold pt-6">
             My Order
           </h1>
           <div className="flex justify-between bg-teal-700 w-full px-10 py-8 text-teal-50  font-bold text-xl ">
