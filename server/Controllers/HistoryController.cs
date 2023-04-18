@@ -18,7 +18,7 @@ public class HistoryController : ControllerBase {
     }
 
     [HttpGet("history/{userId}")]
-    public async Task<ActionResult<List<Histories>>> GetHistoryByUserId(Guid userId)
+    public async Task<ActionResult<List<Histories>>> GetHistory(Guid userId)
     {
       var histories = await _dbContext.Histories.Where(h => h.User.UserId == userId).Include(h => h.User).OrderByDescending(h => h.Date).ToListAsync();
       if(histories is null){
@@ -47,7 +47,7 @@ public class HistoryController : ControllerBase {
         };
         _dbContext.Histories.Add(newHistory);
         await _dbContext.SaveChangesAsync();
-        return CreatedAtAction("GetHistory", new { id = newHistory.HistoryId}, history);
+        return CreatedAtAction("GetHistory", new { userId = newHistory.User.UserId }, history);
     }
 }
 

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { authenticate, getToken } from "../services/Authorize";
 import { CgClose } from "react-icons/cg";
 
@@ -51,7 +50,7 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="md:pt-0 pt-30 px-10 w-screen h-screen flex justify-center items-center">
+    <div className=" px-10 w-screen min-h-screen flex justify-center items-center bg-gray-100">
       <div className="bg-white p-10 rounded space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold">Login</h1>
         {invalidLogin && (

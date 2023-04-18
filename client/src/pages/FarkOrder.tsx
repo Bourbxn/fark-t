@@ -98,17 +98,21 @@ const FarkOrder = () => {
               "success"
             ).then(() => navigate("/fark"));
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err);
             Swal.fire("Oops...", "Fark coin not enough!", "error");
           });
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
   useEffect(() => {}, []);
 
   return (
-    <div className="md:pt-0 pt-32 px-10 w-screen h-screen flex justify-center items-center">
+    <div className="md:pt-0 pt-32 px-10 w-screen min-h-screen flex justify-center items-center bg-gray-100 pb-10">
       <div className="bg-white rounded space-y-5 shadow-lg w-[30rem]">
-        <h1 className="text-center text-5xl text-teal-900 font-bold">
+        <h1 className="text-center text-5xl text-teal-900 font-bold pt-6">
           Fark Order
         </h1>
         <div className="bg-teal-700 w-full text-teal-50 px-10 py-8 space-y-4 font-bold text-xl">
@@ -154,16 +158,19 @@ const FarkOrder = () => {
             />
           </div>
           <br />
-          <div className="flex gap-4">
+          <div className="flex gap-4 pb-10">
             <button
               className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full"
               onClick={submitForm}
             >
               FARK-T
             </button>
-            <button className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full">
-              <Link to="/">CANCEL</Link>
-            </button>
+            <Link
+              to="/"
+              className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
+            >
+              <button>CANCEL</button>
+            </Link>
           </div>
         </form>
       </div>

@@ -42,10 +42,10 @@ const MyOrder = () => {
   }, []);
 
   return (
-    <div className="pt-40 py-10 px-20 text-5xl text-teal-500 space-y-4">
+    <div className="pt-40 py-10 px-20 text-5xl text-teal-500 space-y-4 min-h-screen bg-gray-100">
       {orders.length === 0 && (
         <div className="text-center">
-          <h1 className="text-gray-300 font-bold text-6xl">NO ORDERS YET</h1>
+          <h1 className="text-gray-400 font-bold text-6xl">NO ORDERS YET</h1>
         </div>
       )}
       <div className="flex flex-wrap gap-16 md:justify-start justify-center items-center">

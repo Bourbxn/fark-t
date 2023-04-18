@@ -28,6 +28,15 @@ public class UserController : ControllerBase
         return user; 
     }
 
+    [HttpGet("user/username/{username}")]
+    public async Task<ActionResult<Boolean>> GetTakenUsernmae(string username){
+      var user = await _dbContext.Users.Where(u => u.Username == username).FirstOrDefaultAsync();
+      if(user is null){
+        return false;
+      }
+      return true;
+    }
+
     [HttpPut("user/addcoin/{id}")]
     public async Task<ActionResult<Users?>> AddFarkCoin(Guid id, int coinAdd)
     {

@@ -55,7 +55,7 @@ const NewOrder = () => {
   useEffect(() => {}, []);
 
   return (
-    <div className="md:pt-0 pt-32 px-10 w-screen h-screen flex justify-center items-center">
+    <div className="md:pt-0 pt-32 px-10 w-screen min-h-screen flex justify-center items-center bg-gray-100 pb-10">
       <div className="bg-white p-10 rounded space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold">
           New Order
@@ -101,9 +101,12 @@ const NewOrder = () => {
             >
               NEW ORDER
             </button>
-            <button className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full">
-              <Link to="/">CANCEL</Link>
-            </button>
+            <Link
+              to="/"
+              className="w-full cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded flex justify-center items-center"
+            >
+              <button>CANCEL</button>
+            </Link>
           </div>
         </form>
       </div>

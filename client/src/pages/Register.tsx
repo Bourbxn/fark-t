@@ -18,7 +18,6 @@ const Register = () => {
   const [invalidTel, setInvalidTel] = useState(false);
   const [invalidPwd, setInvalidPwd] = useState(false);
   const [invalidCpwd, setInvalidCpwd] = useState(false);
-  const [invalidUsr, setInvalidUsr] = useState(false);
 
   const inputValue = (name: string, event: any) => {
     setState({ ...state, [name]: event.target.value });
@@ -77,7 +76,6 @@ const Register = () => {
       })
       .catch((err) => {
         console.log(err);
-        setInvalidUsr(true);
       });
   };
   useEffect(() => {
@@ -85,7 +83,7 @@ const Register = () => {
   }, []);
 
   return (
-    <div className="md:pt-0 pt-32 px-10 w-screen h-screen flex justify-center items-center">
+    <div className="pt-32 md:pt-16 pb-20 md:pb-0 px-10 w-screen min-h-screen flex justify-center items-center bg-gray-100">
       <div className="bg-white p-10 rounded space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold">
           Register
@@ -95,18 +93,11 @@ const Register = () => {
             <div className="text-teal-800 font-semibold pb-1">Username</div>
             <input
               type="text"
-              className={`rounded border-[2px] py-2 px-3 w-full ${
-                invalidUsr ? "border-rose-400" : "border-slate-300"
-              }`}
+              className={`rounded border-[2px] py-2 px-3 w-full border-slate-300`}
               value={username}
               onChange={(e) => inputValue("username", e)}
               placeholder="username"
             />
-            {invalidUsr && (
-              <div className="absolute text-sm text-rose-400 font-semibold">
-                Username is already taken
-              </div>
-            )}
           </div>
           <div>
             <div className="text-teal-800 font-semibold pb-1">Phone</div>
