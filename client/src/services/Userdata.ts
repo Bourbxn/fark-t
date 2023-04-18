@@ -17,7 +17,7 @@ export const getUserdata = (data: string) => {
         return decodedToken.Id;
       }
     } else {
-      return false;
+      return null;
     }
   }
 };

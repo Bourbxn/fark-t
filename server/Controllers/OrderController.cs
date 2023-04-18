@@ -20,15 +20,15 @@ public class OrderController : ControllerBase
 
     //get all order
     [HttpGet("order")]
-    public async Task<ActionResult<List<Orders>>> GetOrders()
+    public async Task<ActionResult<List<Orders>>> GetOrders(string username)
     {
-        var orders = await _dbContext.Orders.Include(o => o.User).ToListAsync();
+        var orders = await _dbContext.Orders.Where(o => o.User.Username != username).Include(o => o.User).ToListAsync();
         if(orders is null){
           return BadRequest();
         }
         return orders;
     } 
-    
+
     //get single order
     [HttpGet("order/{id}")]
     public async Task<ActionResult<Orders?>> GetOrder(Guid id)

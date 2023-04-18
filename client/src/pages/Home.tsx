@@ -26,7 +26,11 @@ const Home = () => {
 
   const fetchData = () => {
     axios
-      .get<Order[]>(`${import.meta.env.VITE_APP_API}/order`)
+      .get<Order[]>(
+        `${import.meta.env.VITE_APP_API}/order?username=${getUserdata(
+          "Username"
+        )}`
+      )
       .then((response) => {
         setOrders(response.data);
       })
