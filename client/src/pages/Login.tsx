@@ -58,7 +58,7 @@ const Login = () => {
             className="bg-rose-100 border-rose-300 border-[1px] w-full text-rose-900 font-semibold p-5 rounded text-sm
             flex justify-between items-center"
           >
-            <p>Incorrect username of password</p>
+            <p>Incorrect username or password</p>
             <button
               onClick={() => {
                 setInvalidLogin(false);

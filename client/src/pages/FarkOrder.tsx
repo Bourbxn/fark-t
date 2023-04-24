@@ -32,7 +32,11 @@ const FarkOrder = () => {
 
   const fetchData = () => {
     axios
-      .get<Order>(`${import.meta.env.VITE_APP_API}/order/${params.id}`)
+      .get<Order>(`${import.meta.env.VITE_APP_API}/order/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((response) => {
         console.log(response.data);
         setOrder(response.data);
@@ -59,6 +63,36 @@ const FarkOrder = () => {
 
   const navigate = useNavigate();
 
+  const historyCreate = () => {
+    axios
+      .post(
+        `${import.meta.env.VITE_APP_API}/history/create`,
+        {
+          Role: "FARK",
+          CoinSpending: -1,
+          Restaurant: order?.Restaurant,
+          Category: order?.Category,
+          Menu: menu,
+          Location: location,
+          Owner: order?.User.Username,
+          UserId: getUserdata("Id"),
+        },
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
+      )
+      .then(() => {
+        Swal.fire("Good job!", "Successfully to Fark Order", "success").then(
+          () => navigate("/fark")
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const submitForm: React.MouseEventHandler<HTMLButtonElement> | undefined = (
     e: any
   ) => {
@@ -80,31 +114,10 @@ const FarkOrder = () => {
         }
       )
       .then(() => {
-        axios
-          .post(`${import.meta.env.VITE_APP_API}/history/create`, {
-            Role: "FARK",
-            CoinSpending: -1,
-            Restaurant: order?.Restaurant,
-            Category: order?.Category,
-            Menu: menu,
-            Location: location,
-            Owner: order?.User.Username,
-            UserId: getUserdata("Id"),
-          })
-          .then(() => {
-            Swal.fire(
-              "Good job!",
-              "Successfully to Fark Order",
-              "success"
-            ).then(() => navigate("/fark"));
-          })
-          .catch((err) => {
-            console.log(err);
-            Swal.fire("Oops...", "Fark coin not enough!", "error");
-          });
+        historyCreate();
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire("Oops...", "Fark coin not enough!", "error");
       });
   };
   useEffect(() => {}, []);

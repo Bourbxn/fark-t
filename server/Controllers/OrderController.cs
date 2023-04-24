@@ -77,7 +77,7 @@ public class OrderController : ControllerBase
 
    //delete order
    [HttpDelete("order/delete/{id}")]
-   public async Task<IActionResult> DeleteOrder(Guid id)
+   public async Task<ActionResult> DeleteOrder(Guid id)
    {
        var order = await _dbContext.Orders.FindAsync(id);
        var farkList = await _dbContext.Farks.Where(f => f.Order.OrderId == id).Include(f => f.Order).ToListAsync();

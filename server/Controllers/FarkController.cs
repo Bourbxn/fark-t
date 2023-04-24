@@ -31,7 +31,7 @@ public class FarkController : ControllerBase
     [HttpGet("fark/myfark/{userId}")]
     public async Task<ActionResult<List<Farks>>> GetMyFark(Guid userId)
     {
-        var farks = await _dbContext.Farks.Where(farks=>farks.User.UserId == userId).Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).ToListAsync();
+        var farks = await _dbContext.Farks.Where(farks=>farks.User.UserId == userId && farks.Status != "ORDER_RECEIVED").Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).ToListAsync();
         if(farks is null){
           return BadRequest();
         }

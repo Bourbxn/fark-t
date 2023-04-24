@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
 import { formatDate } from "../utils/Function";
 
@@ -32,7 +33,11 @@ const History = () => {
   };
   const fetchData = () => {
     axios
-      .get(`${import.meta.env.VITE_APP_API}/history/${getUserdata("Id")}`)
+      .get(`${import.meta.env.VITE_APP_API}/history/${getUserdata("Id")}`, {
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((response) => {
         console.log(response.data);
         setHistories(response.data);

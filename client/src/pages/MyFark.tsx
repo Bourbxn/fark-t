@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FarkCard from "../components/FarkCard";
+import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
 
 interface Fark {
@@ -36,10 +37,16 @@ const MyFark = () => {
   const fetchData = () => {
     axios
       .get<Fark[]>(
-        `${import.meta.env.VITE_APP_API}/fark/myfark/${getUserdata("Id")}`
+        `${import.meta.env.VITE_APP_API}/fark/myfark/${getUserdata("Id")}`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
       )
       .then((response) => {
         setFarks(response.data);
+        console.log(response.data);
       })
       .catch((err) => {
         alert(err);

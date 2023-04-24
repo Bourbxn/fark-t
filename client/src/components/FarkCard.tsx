@@ -13,6 +13,7 @@ import { FaUserCircle } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "../services/Authorize";
 
 interface Fark {
   FarkId: string;
@@ -99,7 +100,12 @@ const FarkCard: React.FC<Fark> = ({
       .put(
         `${
           import.meta.env.VITE_APP_API
-        }/fark/status/${farkId}?status=ORDER_RECEIVED`
+        }/fark/status/${farkId}?status=ORDER_RECEIVED`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
       )
       .then(() => {
         Swal.fire(

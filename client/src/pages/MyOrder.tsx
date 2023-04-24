@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import OrderCard from "../components/OrderCard";
+import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
 
 interface Order {
@@ -27,7 +28,12 @@ const MyOrder = () => {
   const fetchData = () => {
     axios
       .get<Order[]>(
-        `${import.meta.env.VITE_APP_API}/myorder/${getUserdata("Id")}`
+        `${import.meta.env.VITE_APP_API}/myorder/${getUserdata("Id")}`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
       )
       .then((response) => {
         setOrders(response.data);

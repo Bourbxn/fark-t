@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
 import { isTelephoneInvalid } from "../utils/Function";
 
@@ -29,7 +30,11 @@ const EditProfile = () => {
 
   const fetchData = () => {
     axios
-      .get(`${import.meta.env.VITE_APP_API}/user/${getUserdata("Id")}`)
+      .get(`${import.meta.env.VITE_APP_API}/user/${getUserdata("Id")}`, {
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((response) => {
         const { Username, Telephone } = response.data;
         setCurPassword(response.data.Password);
@@ -71,10 +76,18 @@ const EditProfile = () => {
       return;
     }
     axios
-      .put(`${import.meta.env.VITE_APP_API}/user/update/${getUserdata("Id")}`, {
-        Telephone: Telephone,
-        Password: NewPassword,
-      })
+      .put(
+        `${import.meta.env.VITE_APP_API}/user/update/${getUserdata("Id")}`,
+        {
+          Telephone: Telephone,
+          Password: NewPassword,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
+      )
       .then(() => {
         Swal.fire(
           "Updated!",

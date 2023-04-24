@@ -1,7 +1,7 @@
 import { CgMenu, CgClose } from "react-icons/cg";
 import { MdOutlineNoFood } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { logout } from "../services/Authorize";
+import { getToken, logout } from "../services/Authorize";
 import { Link, useNavigate } from "react-router-dom";
 import { CgAddR } from "react-icons/cg";
 import { FaUserCircle, FaHistory } from "react-icons/fa";
@@ -32,7 +32,11 @@ const Navbar: React.FC = () => {
 
   const fetchData = () => {
     axios
-      .get<User>(`${import.meta.env.VITE_APP_API}/user/${getUserdata("Id")}`)
+      .get<User>(`${import.meta.env.VITE_APP_API}/user/${getUserdata("Id")}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((response) => {
         setUser(response.data);
       })
