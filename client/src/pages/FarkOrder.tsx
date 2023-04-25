@@ -116,7 +116,7 @@ const FarkOrder = () => {
       .then(() => {
         historyCreate();
       })
-      .catch((err) => {
+      .catch(() => {
         Swal.fire("Oops...", "Fark coin not enough!", "error");
       });
   };

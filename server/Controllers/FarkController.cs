@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
@@ -7,14 +8,13 @@ namespace server.Controllers;
 
 [ApiController]
 [Route("/api")]
+[Authorize]
 public class FarkController : ControllerBase
 {
-    private readonly ILogger<FarkController> _logger;
     private readonly ApplicationDbContext _dbContext;
 
-    public FarkController(ILogger<FarkController> logger, ApplicationDbContext dbContext)
+    public FarkController( ApplicationDbContext dbContext)
     {
-        _logger = logger;
         _dbContext = dbContext;
     }
 

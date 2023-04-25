@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
@@ -7,13 +8,12 @@ namespace server.Controllers;
 
 [ApiController]
 [Route("/api")]
+[Authorize]
 public class HistoryController : ControllerBase {
-    private readonly ILogger<HistoryController> _logger;
     private readonly ApplicationDbContext _dbContext;
 
-    public HistoryController(ILogger<HistoryController> logger, ApplicationDbContext dbContext)
+    public HistoryController( ApplicationDbContext dbContext)
     {
-        _logger = logger;
         _dbContext = dbContext;
     }
 

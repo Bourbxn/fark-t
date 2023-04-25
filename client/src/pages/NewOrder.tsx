@@ -9,7 +9,7 @@ const NewOrder = () => {
   const [state, setState] = useState({
     restaurant: "",
     category: "",
-    farkLimit: "",
+    farkLimit: "1",
   });
 
   const { restaurant, category, farkLimit } = state;
@@ -85,13 +85,19 @@ const NewOrder = () => {
           </div>
           <div>
             <div className="text-teal-800 font-semibold pb-1">Fark Limit</div>
-            <input
-              type="text"
-              className="rounded border-slate-300 border-[2px] py-2 px-3 w-full"
-              value={farkLimit}
-              onChange={(e) => inputValue("farkLimit", e)}
-              placeholder="fark limit"
-            />
+            <div className="relative w-full">
+              <select
+                className="w-full py-2 px-3  bg-white rounded  outline-none appearance-none relative text-black text-base
+                border-slate-300 border-[2px]"
+                onChange={(e) => inputValue("farkLimit", e)}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
           </div>
           <br />
           <div className="flex gap-4">

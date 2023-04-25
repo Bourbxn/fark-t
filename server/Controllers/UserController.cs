@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
@@ -9,16 +10,15 @@ namespace server.Controllers;
 [Route("/api")]
 public class UserController : ControllerBase
 {
-    private readonly ILogger<UserController> _logger;
     private readonly ApplicationDbContext _dbContext;
 
-    public UserController(ILogger<UserController> logger, ApplicationDbContext dbContext)
+    public UserController( ApplicationDbContext dbContext)
     {
-        _logger = logger;
         _dbContext = dbContext;
     }
 
     [HttpGet("user/{id}")]
+    [Authorize]
     public async Task<ActionResult<Users?>> GetUser(Guid id)
     {
         var user = await _dbContext.Users.Where(users => users.UserId == id).FirstOrDefaultAsync();
@@ -29,6 +29,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("user/username/{username}")]
+    [Authorize]
     public async Task<ActionResult<Boolean>> GetTakenUsernmae(string username){
       var user = await _dbContext.Users.Where(u => u.Username == username).FirstOrDefaultAsync();
       if(user is null){
@@ -38,6 +39,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("user/addcoin/{id}")]
+    [Authorize]
     public async Task<ActionResult<Users?>> AddFarkCoin(Guid id, int coinAdd)
     {
       var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == id);
@@ -50,6 +52,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("user/update/{id}")]
+    [Authorize]
     public async Task<ActionResult<UpdateUserRequest?>> UpdateUser(Guid id, UpdateUserRequest user)
     {
       var userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == id);

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
@@ -9,16 +10,13 @@ namespace server.Controllers;
 [Route("/api")]
 public class OrderController : ControllerBase
 {
-    private readonly ILogger<OrderController> _logger;
     private readonly ApplicationDbContext _dbContext;
 
-    public OrderController(ILogger<OrderController> logger, ApplicationDbContext dbContext)
+    public OrderController( ApplicationDbContext dbContext)
     {
-        _logger = logger;
         _dbContext = dbContext;
     }
 
-    //get all order
     [HttpGet("order")]
     public async Task<ActionResult<List<Orders>>> GetOrders(string username)
     {
@@ -29,19 +27,19 @@ public class OrderController : ControllerBase
         return orders;
     } 
 
-    //get single order
     [HttpGet("order/{id}")]
+    [Authorize]
     public async Task<ActionResult<Orders?>> GetOrder(Guid id)
     {
       var order = await _dbContext.Orders.Include(o => o.User).FirstOrDefaultAsync(orders => orders.OrderId == id);
       if(order is null){
         return BadRequest();
       }
-        return order;
+      return order;
     }
     
-    //get my order
     [HttpGet("myorder/{userId}")]
+    [Authorize]
     public async Task<ActionResult<List<Orders>>> GetMyOrder(Guid userId)
     {
         var orders = await _dbContext.Orders.Where(o=>o.User.UserId == userId).Include(o => o.User).ToListAsync();
@@ -51,9 +49,8 @@ public class OrderController : ControllerBase
         return orders;
     }
     
-    
-    //create order
     [HttpPost("order/create")]
+    [Authorize]
     public async Task<ActionResult<Orders>> CreateOrder(CreateOrderRequest order)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync( u=> u.UserId == order.UserId);
@@ -75,8 +72,8 @@ public class OrderController : ControllerBase
         return CreatedAtAction("GetOrder", new { id = newOrder.OrderId }, order); 
     }
 
-   //delete order
    [HttpDelete("order/delete/{id}")]
+   [Authorize]
    public async Task<ActionResult> DeleteOrder(Guid id)
    {
        var order = await _dbContext.Orders.FindAsync(id);
