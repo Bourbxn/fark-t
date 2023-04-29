@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
 import { HistoryTypes } from "../types/Types";
-import { formatDate } from "../utils/Function";
+import { formatDate } from "../utils/Formatting";
 
 const History = () => {
   const [histories, setHistories] = useState<HistoryTypes[]>([]);

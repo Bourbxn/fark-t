@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
-import { isTelephoneInvalid } from "../utils/Function";
+import { isTelephoneInvalid } from "../utils/FormValidation";
 
 const EditProfile = () => {
   const [state, setState] = useState({

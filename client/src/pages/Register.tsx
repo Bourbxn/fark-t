@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getToken } from "../services/Authorize";
-import { isPasswordInvalid, isTelephoneInvalid } from "../utils/Function";
+import { isPasswordInvalid, isTelephoneInvalid } from "../utils/FormValidation";
 
 const Register = () => {
   const [state, setState] = useState({
