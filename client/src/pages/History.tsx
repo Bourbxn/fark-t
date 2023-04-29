@@ -3,25 +3,15 @@ import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
+import { HistoryTypes } from "../types/Types";
 import { formatDate } from "../utils/Function";
 
-interface History {
-  Date: string;
-  Role: string;
-  CoinSpending: number;
-  Restaurant: string;
-  Category: string;
-  Owner: string;
-  Menu: string;
-  Location: string;
-}
-
 const History = () => {
-  const [histories, setHistories] = useState<History[]>([]);
+  const [histories, setHistories] = useState<HistoryTypes[]>([]);
 
   const [itemOffset, setItemOffset] = useState(0);
 
-  const itemsPerPage = 5;
+  const itemsPerPage: number = 5;
 
   const endOffset = itemOffset + itemsPerPage;
   const currentHistories = histories.slice(itemOffset, endOffset);
@@ -33,11 +23,14 @@ const History = () => {
   };
   const fetchData = () => {
     axios
-      .get(`${import.meta.env.VITE_APP_API}/history/${getUserdata("Id")}`, {
-        headers: {
-          authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .get<HistoryTypes[]>(
+        `${import.meta.env.VITE_APP_API}/history/${getUserdata("Id")}`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         setHistories(response.data);

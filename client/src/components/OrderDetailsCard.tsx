@@ -6,20 +6,9 @@ import {
 } from "react-icons/md";
 import { FaUserCircle, FaMotorcycle } from "react-icons/fa";
 import { BsCartCheckFill } from "react-icons/bs";
+import { FarkProps } from "../types/Types";
 
-interface fark {
-  Menu: string;
-  Location: string;
-  Status: string;
-  User: user;
-}
-
-interface user {
-  Username: string;
-  Telephone: string;
-}
-
-const OrderDetailsCard = ({ Menu, Location, Status, User }: fark) => {
+const OrderDetailsCard = ({ Menu, Location, Status, User }: FarkProps) => {
   return (
     <div className="bg-teal-700 border-b-2 border-teal-200 px-10 py-8 font-bold text-xl text-white flex justify-between">
       <div className="space-y-4">

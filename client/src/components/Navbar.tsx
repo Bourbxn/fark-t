@@ -10,14 +10,7 @@ import { FiLogOut } from "react-icons/fi";
 import { RiUserSettingsFill } from "react-icons/ri";
 import { getUserdata } from "../services/Userdata";
 import axios from "axios";
-
-interface User {
-  UserId: string;
-  Username: string;
-  Password: string;
-  Telephone: string;
-  FarkCoin: number;
-}
+import { User } from "../types/Types";
 
 const Navbar: React.FC = () => {
   const paths = [

@@ -3,24 +3,7 @@ import { useEffect, useState } from "react";
 import OrderCard from "../components/OrderCard";
 import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
-
-interface Order {
-  Restaurant: string;
-  Category: string;
-  CurrentAmount: number;
-  LimitAmount: number;
-  Status: boolean;
-  OrderId: string;
-  User: User;
-}
-
-interface User {
-  UserId: string;
-  Username: string;
-  Password: string;
-  Telephone: string;
-  FarkCoin: 3;
-}
+import { Order } from "../types/Types";
 
 const Home = () => {
   const [orders, setOrders] = useState<Order[]>([]);

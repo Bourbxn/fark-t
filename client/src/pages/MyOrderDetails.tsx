@@ -7,27 +7,10 @@ import Swal from "sweetalert2";
 import OrderDetailsCard from "../components/OrderDetailsCard";
 import { getUserdata } from "../services/Userdata";
 import { getToken } from "../services/Authorize";
-
-interface fark {
-  Menu: string;
-  Location: string;
-  Status: string;
-  User: user;
-  Order: order;
-}
-
-interface user {
-  Username: string;
-  Telephone: string;
-}
-
-interface order {
-  Restaurant: string;
-  Category: string;
-}
+import { FarkOrderDetails } from "../types/Types";
 
 const MyOrderDetails = () => {
-  const [farks, setFarks] = useState<fark[]>([]);
+  const [farks, setFarks] = useState<FarkOrderDetails[]>([]);
 
   const params = useParams();
 
@@ -37,11 +20,14 @@ const MyOrderDetails = () => {
 
   const fetchData = () => {
     axios
-      .get(`${import.meta.env.VITE_APP_API}/fark/myorder/${params.id}`, {
-        headers: {
-          authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .get<FarkOrderDetails[]>(
+        `${import.meta.env.VITE_APP_API}/fark/myorder/${params.id}`,
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
+      )
       .then((response) => {
         setFarks(response.data);
       })
@@ -166,6 +152,7 @@ const MyOrderDetails = () => {
           "success"
         ).then(() => {
           navigate("/myorder");
+          navigate(0);
         });
       })
       .catch((err) => {

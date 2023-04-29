@@ -2,24 +2,16 @@ import { Link } from "react-router-dom";
 import { MdFoodBank, MdRestaurantMenu } from "react-icons/md";
 import { HiShoppingCart, HiEye } from "react-icons/hi";
 import { getUserdata } from "../services/Userdata";
+import { OrderProps } from "../types/Types";
 
-interface Props {
-  rest: string;
-  cate: string;
-  curAmt: number;
-  limit: number;
-  owner: string;
-  orderId: string;
-}
-
-const OrderCard: React.FC<Props> = ({
+const OrderCard: React.FC<OrderProps> = ({
   rest,
   cate,
   limit,
   owner,
   curAmt,
   orderId,
-}: Props) => {
+}: OrderProps) => {
   return (
     <div className=" text-white rounded-lg shadow-xl border-teal-900 md:w-96 w-60">
       <div className="bg-white text-teal-800 p-6 md:text-2xl text-lg font-semibold flex justify-between rounded-t-lg">

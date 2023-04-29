@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
-import { getUserdata } from "./services/Userdata";
+import { getUserdata } from "../services/Userdata";
 
 interface route {
-  children: any;
+  children: JSX.Element;
 }
 
 const ProtectedRoute = ({ children }: route) => {

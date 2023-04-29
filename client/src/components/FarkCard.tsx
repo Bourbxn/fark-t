@@ -14,33 +14,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../services/Authorize";
-
-interface Fark {
-  FarkId: string;
-  Menu: string;
-  Location: string;
-  Status: string;
-  User: User;
-  Order: Order;
-}
-
-interface Order {
-  Restaurant: string;
-  Category: string;
-  CurrentAmount: number;
-  LimitAmount: number;
-  Status: boolean;
-  OrderId: string;
-  User: User;
-}
-
-interface User {
-  UserId: string;
-  Username: string;
-  Password: string;
-  Telephone: string;
-  FarkCoin: 3;
-}
+import { Fark } from "../types/Types";
 
 const FarkCard: React.FC<Fark> = ({
   FarkId,

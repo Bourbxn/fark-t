@@ -6,24 +6,7 @@ import { getToken } from "../services/Authorize";
 import { MdFoodBank, MdRestaurantMenu } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { getUserdata } from "../services/Userdata";
-
-interface Order {
-  Restaurant: string;
-  Category: string;
-  CurrentAmount: number;
-  LimitAmount: number;
-  Status: boolean;
-  OrderId: string;
-  User: User;
-}
-
-interface User {
-  UserId: string;
-  Username: string;
-  Password: string;
-  Telephone: string;
-  FarkCoin: 3;
-}
+import { Order } from "../types/Types";
 
 const FarkOrder = () => {
   const params = useParams();
@@ -85,7 +68,10 @@ const FarkOrder = () => {
       )
       .then(() => {
         Swal.fire("Good job!", "Successfully to Fark Order", "success").then(
-          () => navigate("/fark")
+          () => {
+            navigate("/fark");
+            navigate(0);
+          }
         );
       })
       .catch((err) => {

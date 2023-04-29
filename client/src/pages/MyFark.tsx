@@ -3,33 +3,7 @@ import { useEffect, useState } from "react";
 import FarkCard from "../components/FarkCard";
 import { getToken } from "../services/Authorize";
 import { getUserdata } from "../services/Userdata";
-
-interface Fark {
-  FarkId: string;
-  Menu: string;
-  Location: string;
-  Status: string;
-  User: User;
-  Order: Order;
-}
-
-interface Order {
-  Restaurant: string;
-  Category: string;
-  CurrentAmount: number;
-  LimitAmount: number;
-  Status: boolean;
-  OrderId: string;
-  User: User;
-}
-
-interface User {
-  UserId: string;
-  Username: string;
-  Password: string;
-  Telephone: string;
-  FarkCoin: 3;
-}
+import { Fark } from "../types/Types";
 
 const MyFark = () => {
   const [farks, setFarks] = useState<Fark[]>([]);
