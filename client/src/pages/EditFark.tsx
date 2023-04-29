@@ -5,24 +5,29 @@ import Swal from "sweetalert2";
 import { getToken } from "../services/Authorize";
 import { MdFoodBank, MdRestaurantMenu } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
-import { getUserdata } from "../services/Userdata";
-import { Order } from "../types/Types";
+import { Fark } from "../types/Types";
 
-const FarkOrder = () => {
+const EditFark = () => {
   const params = useParams();
 
-  const [order, setOrder] = useState<Order>();
+  const [fark, setFark] = useState<Fark>();
+
+  const [state, setState] = useState({
+    Menu: "",
+    Location: "",
+  });
 
   const fetchData = () => {
     axios
-      .get<Order>(`${import.meta.env.VITE_APP_API}/order/${params.id}`, {
+      .get<Fark>(`${import.meta.env.VITE_APP_API}/fark/${params.id}`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
       })
       .then((response) => {
-        console.log(response.data);
-        setOrder(response.data);
+        const { Menu, Location } = response.data;
+        setFark(response.data);
+        setState({ ...state, Menu, Location });
       })
       .catch((err) => {
         alert(err);
@@ -33,12 +38,7 @@ const FarkOrder = () => {
     fetchData();
   }, []);
 
-  const [state, setState] = useState({
-    menu: "",
-    location: "",
-  });
-
-  const { menu, location } = state;
+  const { Menu, Location } = state;
 
   const inputValue = (name: string, event: any) => {
     setState({ ...state, [name]: event.target.value });
@@ -46,19 +46,13 @@ const FarkOrder = () => {
 
   const navigate = useNavigate();
 
-  const historyCreate = () => {
+  const updateHistory = () => {
     axios
-      .post(
-        `${import.meta.env.VITE_APP_API}/history/create`,
+      .put(
+        `${import.meta.env.VITE_APP_API}/history/update/${params.id}`,
         {
-          Role: "FARK",
-          CoinSpending: -1,
-          Restaurant: order?.Restaurant,
-          Category: order?.Category,
-          Menu: menu,
-          Location: location,
-          Owner: order?.User.Username,
-          UserId: getUserdata("Id"),
+          Menu: Menu,
+          Location: Location,
         },
         {
           headers: {
@@ -67,7 +61,7 @@ const FarkOrder = () => {
         }
       )
       .then(() => {
-        Swal.fire("Good job!", "Successfully to Fark Order", "success").then(
+        Swal.fire("Good job!", "Successfully to Edit Fark", "success").then(
           () => {
             navigate("/fark");
             navigate(0);
@@ -79,19 +73,16 @@ const FarkOrder = () => {
       });
   };
 
-  const submitForm: React.MouseEventHandler<HTMLButtonElement> | undefined = (
+  const updateForm: React.MouseEventHandler<HTMLButtonElement> | undefined = (
     e: any
   ) => {
     e.preventDefault();
     axios
-      .post(
-        `${import.meta.env.VITE_APP_API}/fark/create`,
+      .put(
+        `${import.meta.env.VITE_APP_API}/fark/update/${params.id}`,
         {
-          OrderId: order?.OrderId,
-          UserId: getUserdata("Id"),
-          Menu: menu,
-          Location: location,
-          Status: "WAIT_CONFIRM",
+          Menu: Menu,
+          Location: Location,
         },
         {
           headers: {
@@ -100,10 +91,10 @@ const FarkOrder = () => {
         }
       )
       .then(() => {
-        historyCreate();
+        updateHistory();
       })
-      .catch(() => {
-        Swal.fire("Oops...", "Fark coin not enough!", "error");
+      .catch((err) => {
+        console.log(err);
       });
   };
   useEffect(() => {}, []);
@@ -112,26 +103,26 @@ const FarkOrder = () => {
     <div className="md:pt-0 pt-32 px-10 w-screen min-h-screen flex justify-center items-center bg-gray-100 pb-10">
       <div className="bg-white rounded space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold pt-6">
-          Fark Order
+          Edit Fark
         </h1>
         <div className="bg-teal-700 w-full text-teal-50 px-10 py-8 space-y-4 font-bold text-xl">
           <div className="flex items-center gap-x-1">
             <span className="md:text-3xl text-xl mr-3">
               <MdFoodBank></MdFoodBank>
             </span>
-            {order?.Restaurant}
+            {fark?.Order.Restaurant}
           </div>
           <div className="flex items-center gap-x-1">
             <span className="md:text-3xl text-xl mr-3">
               <MdRestaurantMenu></MdRestaurantMenu>
             </span>
-            {order?.Category}
+            {fark?.Order.Category}
           </div>
           <div className="flex items-center gap-x-1">
             <span className="md:text-3xl text-xl mr-3">
               <FaUserCircle></FaUserCircle>
             </span>
-            {order?.User.Username}
+            {fark?.Order.User.Username}
           </div>
         </div>
 
@@ -141,8 +132,8 @@ const FarkOrder = () => {
             <input
               type="text"
               className="rounded border-slate-300 border-[2px] py-2 px-3 w-full"
-              value={menu}
-              onChange={(e) => inputValue("menu", e)}
+              value={Menu}
+              onChange={(e) => inputValue("Menu", e)}
               placeholder="menu"
             />
           </div>
@@ -151,8 +142,8 @@ const FarkOrder = () => {
             <input
               type="text"
               className="rounded border-slate-300 border-[2px] py-2 px-3 w-full"
-              value={location}
-              onChange={(e) => inputValue("location", e)}
+              value={Location}
+              onChange={(e) => inputValue("Location", e)}
               placeholder="location"
             />
           </div>
@@ -160,12 +151,12 @@ const FarkOrder = () => {
           <div className="flex gap-4 pb-10">
             <button
               className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full"
-              onClick={submitForm}
+              onClick={updateForm}
             >
-              FARK-T
+              UPDATE
             </button>
             <Link
-              to="/"
+              to="/fark"
               className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
             >
               <button>CANCEL</button>
@@ -177,4 +168,4 @@ const FarkOrder = () => {
   );
 };
 
-export default FarkOrder;
+export default EditFark;

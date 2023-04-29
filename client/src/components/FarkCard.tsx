@@ -8,11 +8,12 @@ import {
   MdCheckCircle,
 } from "react-icons/md";
 import { FaMotorcycle } from "react-icons/fa";
+import { AiFillEdit } from "react-icons/ai";
 
 import { FaUserCircle } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getToken } from "../services/Authorize";
 import { Fark } from "../types/Types";
 
@@ -131,10 +132,15 @@ const FarkCard: React.FC<Fark> = ({
         </div>
         <div>
           {Status === "WAIT_CONFIRM" && (
-            <MdCancel
-              className="cursor-pointer text-rose-500 text-3xl"
-              onClick={confirmCancel(FarkId)}
-            ></MdCancel>
+            <div className="flex flex-col gap-y-1">
+              <MdCancel
+                className="cursor-pointer text-rose-500 text-3xl hover:text-rose-600 duration-500"
+                onClick={confirmCancel(FarkId)}
+              ></MdCancel>
+              <Link to={`/fark/edit/${FarkId}`}>
+                <AiFillEdit className="cursor-pointer text-gray-400 text-3xl hover:text-gray-300 duration-500"></AiFillEdit>
+              </Link>
+            </div>
           )}
           {Status === "WAIT_ORDER" && (
             <div>

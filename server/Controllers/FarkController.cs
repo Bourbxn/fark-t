@@ -73,7 +73,6 @@ public class FarkController : ControllerBase
       return NoContent();
     }
 
-    //create fark
     [HttpPost("fark/create")]
     public async Task<ActionResult<Farks>> CreateOrder(CreateFarkRequest fark)
     {
@@ -100,6 +99,7 @@ public class FarkController : ControllerBase
         
         var newFark = new Farks
         {
+            FarkId = fark.FarkId,
             Menu = fark.Menu,
             Location = fark.Location,
             Status = fark.Status,
@@ -112,7 +112,7 @@ public class FarkController : ControllerBase
     }
     
     [HttpDelete("fark/{id}")]
-   public async Task<IActionResult> DeleteFark(Guid id)
+    public async Task<IActionResult> DeleteFark(Guid id)
    {
        var fark = await _dbContext.Farks.Include(o=>o.Order).FirstOrDefaultAsync(f => f.FarkId == id);
        if (fark is null)
@@ -124,4 +124,17 @@ public class FarkController : ControllerBase
        await _dbContext.SaveChangesAsync();
        return NoContent();
    }
+
+    [HttpPut("fark/update/{id}")]
+    public async Task<ActionResult> UpdateFark(Guid id, UpdateFarkRequest farkRequest)
+    {
+      var fark = await _dbContext.Farks.FirstOrDefaultAsync(f => f.FarkId == id);
+      if(fark is null){
+        return NotFound();
+      }
+      fark.Menu = farkRequest.Menu;
+      fark.Location = farkRequest.Location;
+      await _dbContext.SaveChangesAsync();
+      return NoContent();
+    }
 }

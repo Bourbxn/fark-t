@@ -11,4 +11,5 @@ public class CreateHistoryRequest
    public string? Menu { get; set; }
    public string? Location { get; set; }
    public Guid UserId { get; set; }
+   public Guid OrderFarkId { get; set; }
 }

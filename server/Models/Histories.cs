@@ -17,5 +17,6 @@ public class Histories
    public string? Menu { get; set; }
    public string? Location { get; set; }
    public Users User { get; set; } = null!;
+   public Guid OrderFarkId { get; set; }
 }
 

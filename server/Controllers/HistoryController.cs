@@ -43,11 +43,25 @@ public class HistoryController : ControllerBase {
           Owner = history.Owner,
           Menu = history.Menu,
           Location = history.Location,
-          User = user
+          User = user,
+          OrderFarkId = history.OrderFarkId,
         };
         _dbContext.Histories.Add(newHistory);
         await _dbContext.SaveChangesAsync();
         return CreatedAtAction("GetHistory", new { userId = newHistory.User.UserId }, history);
+    }
+
+    [HttpPut("history/update/{orderFarkId}")]
+    public async Task<ActionResult> updateHistory(Guid orderFarkId, UpdateFarkRequest historyRequest)
+    {
+      var history = await _dbContext.Histories.FirstOrDefaultAsync(h => h.OrderFarkId == orderFarkId);
+      if(history is null){
+        return NotFound();
+      }
+      history.Menu = historyRequest.Menu;
+      history.Location = historyRequest.Location;
+      await _dbContext.SaveChangesAsync();
+      return NoContent();
     }
 }
 

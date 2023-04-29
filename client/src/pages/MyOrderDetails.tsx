@@ -75,7 +75,7 @@ const MyOrderDetails = () => {
       });
   };
 
-  const isAllOrdersReceived = (farks: fark[]) => {
+  const isAllOrdersReceived = (farks: FarkOrderDetails[]) => {
     let item = 0;
     for (item; item < farks.length; item++) {
       if (farks[item]?.Status !== "ORDER_RECEIVED") {
