@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
         var user =  await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
         if (user is null)
         {
-            return BadRequest();
+            return NotFound();
         }
 
         if (password == user.Password)

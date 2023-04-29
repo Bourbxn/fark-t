@@ -39,6 +39,7 @@ const Home = () => {
       )
       .then((response) => {
         setOrders(response.data);
+        console.log(response.data);
       })
       .catch((err) => {
         alert(err);

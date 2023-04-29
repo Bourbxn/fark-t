@@ -53,7 +53,7 @@ const History = () => {
 
   return (
     <div className="md:pt-40 pt-28 py-10 md:px-20 px-8 flex min-h-screen justify-center  bg-gray-100">
-      <div className="rounded shadow-lg w-screen overflow-hidden h-full">
+      <div className="rounded shadow-lg w-screen overflow-hidden h-full bg-white">
         <div className="px-10 py-8 space-y-2 border-b-2 border-opacity-20">
           <h1 className="font-bold text-2xl text-teal-700">FARKS & ORDERS</h1>
           <h2 className="font-semibold text-lg text-gray-400">

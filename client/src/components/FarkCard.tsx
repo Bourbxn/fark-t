@@ -71,7 +71,11 @@ const FarkCard: React.FC<Fark> = ({
 
   const cancelOrder = (farkId: string) => {
     axios
-      .delete(`${import.meta.env.VITE_APP_API}/fark/${farkId}`)
+      .delete(`${import.meta.env.VITE_APP_API}/fark/${farkId}`, {
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then(() => {
         Swal.fire("Canceled!", "Your order has been canceled.", "success");
         navigate(0);
@@ -101,6 +105,7 @@ const FarkCard: React.FC<Fark> = ({
         `${
           import.meta.env.VITE_APP_API
         }/fark/status/${farkId}?status=ORDER_RECEIVED`,
+        {},
         {
           headers: {
             authorization: `Bearer ${getToken()}`,

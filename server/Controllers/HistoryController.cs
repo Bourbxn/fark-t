@@ -22,7 +22,7 @@ public class HistoryController : ControllerBase {
     {
       var histories = await _dbContext.Histories.Where(h => h.User.UserId == userId).Include(h => h.User).OrderByDescending(h => h.Date).ToListAsync();
       if(histories is null){
-        return BadRequest();
+        return NotFound();
       }
       return histories;
     }
@@ -32,7 +32,7 @@ public class HistoryController : ControllerBase {
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == history.UserId);
         if(user is null){
-          return BadRequest();
+          return NotFound();
         }
         var newHistory = new Histories{
           Date = DateTime.Now,

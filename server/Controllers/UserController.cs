@@ -23,7 +23,7 @@ public class UserController : ControllerBase
     {
         var user = await _dbContext.Users.Where(users => users.UserId == id).FirstOrDefaultAsync();
         if(user is null){
-          return BadRequest();
+          return NotFound();
         }
         return user; 
     }
@@ -44,7 +44,7 @@ public class UserController : ControllerBase
     {
       var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == id);
       if(user is null){
-        return BadRequest();
+        return NotFound();
       }
       user.FarkCoin += coinAdd;
       await _dbContext.SaveChangesAsync();
@@ -57,7 +57,7 @@ public class UserController : ControllerBase
     {
       var userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == id);
       if(userDb is null){
-        return BadRequest();
+        return NotFound();
       }
       userDb.Telephone = user.Telephone;
       userDb.Password = user.Password;
@@ -70,7 +70,7 @@ public class UserController : ControllerBase
     {
         var allUserDb = await _dbContext.Users.ToListAsync();
         if(allUserDb is null){
-          return BadRequest();
+          return NotFound();
         }
         foreach(Users u in allUserDb){
           if(user.Username == u.Username){

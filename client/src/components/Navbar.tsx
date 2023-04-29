@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     getUserdata("Username") && fetchData();
-  }, [user]);
+  }, []);
 
   return (
     <nav className="shadow-lg w-full fixed top-0 lef-0">

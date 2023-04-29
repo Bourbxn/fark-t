@@ -23,7 +23,7 @@ public class FarkController : ControllerBase
     {
         var fark = await _dbContext.Farks.Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).FirstOrDefaultAsync(farks => farks.FarkId == id);
         if(fark is null){
-          return BadRequest();
+          return NotFound();
         }
         return fark;    
     }
@@ -33,7 +33,7 @@ public class FarkController : ControllerBase
     {
         var farks = await _dbContext.Farks.Where(farks=>farks.User.UserId == userId && farks.Status != "ORDER_RECEIVED").Include(f => f.User).Include(f=>f.Order).ThenInclude(f=>f.User).ToListAsync();
         if(farks is null){
-          return BadRequest();
+          return NotFound();
         }
         return farks;
     }
@@ -42,7 +42,7 @@ public class FarkController : ControllerBase
     public async Task<ActionResult<List<Farks>>> GetFarkOrders(Guid orderId){
       var farks = await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
       if(farks is null){
-        return BadRequest();
+        return NotFound();
       }
       return farks;
     }
@@ -50,12 +50,14 @@ public class FarkController : ControllerBase
     [HttpPut("fark/status/order/{orderId}")]
     public async Task<ActionResult<Farks>> UpdateFarkStatusByOrder(Guid orderId, string status){
       var fark = await _dbContext.Farks.Where(farks=>farks.Order.OrderId == orderId).Include(f => f.User).Include(f => f.Order).ToListAsync();
-      if(fark is null){
-        return BadRequest();
+      var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+      if(fark is null || order is null){
+        return NotFound();
       }
       foreach(var item in fark){
         item.Status = status;
       }
+      order.Status = false;
       await _dbContext.SaveChangesAsync();
       return NoContent();
     }
@@ -64,7 +66,7 @@ public class FarkController : ControllerBase
     public async Task<ActionResult<Farks>> UpdateFarkStatus(Guid id, string status){
       var fark = await _dbContext.Farks.Include(f => f.User).Include(f => f.Order).FirstOrDefaultAsync(fark => fark.FarkId == id);
       if(fark is null){
-        return BadRequest();
+        return NotFound();
       }
       fark.Status = status;
       await _dbContext.SaveChangesAsync();
@@ -79,7 +81,7 @@ public class FarkController : ControllerBase
         var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == fark.OrderId);
         if (user is null || order is null)
         {
-            return BadRequest();
+            return NotFound();
         }
 
         if (user.FarkCoin == 0)

@@ -68,6 +68,7 @@ const MyOrderDetails = () => {
         `${import.meta.env.VITE_APP_API}/fark/status/order/${
           params.id
         }?status=WAIT_ORDER`,
+        {},
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -151,6 +152,7 @@ const MyOrderDetails = () => {
         `${import.meta.env.VITE_APP_API}/user/addcoin/${getUserdata(
           "Id"
         )}?coinAdd=${fk}`,
+        {},
         {
           headers: {
             authorization: `Bearer ${getToken()}`,
@@ -209,8 +211,15 @@ const MyOrderDetails = () => {
           </div>
         </div>
 
-        <h2 className="text-center text-teal-900 font-bold text-3xl">Orders</h2>
+        <h2 className="text-center text-teal-900 font-bold text-3xl">Farks</h2>
         <div>
+          {farks.length === 0 && (
+            <div>
+              <h1 className="text-center font-bold text-gray-400 text-lg">
+                NO FARKS YET
+              </h1>
+            </div>
+          )}
           {farks.map((fark, index) => (
             <div key={index}>
               <OrderDetailsCard

@@ -20,9 +20,9 @@ public class OrderController : ControllerBase
     [HttpGet("order")]
     public async Task<ActionResult<List<Orders>>> GetOrders(string username)
     {
-        var orders = await _dbContext.Orders.Where(o => o.User.Username != username).Include(o => o.User).ToListAsync();
+        var orders = await _dbContext.Orders.Where(o => o.User.Username != username && o.LimitAmount != o.CurrentAmount && o.Status == true).Include(o => o.User).ToListAsync();
         if(orders is null){
-          return BadRequest();
+          return NotFound();
         }
         return orders;
     } 
@@ -33,7 +33,7 @@ public class OrderController : ControllerBase
     {
       var order = await _dbContext.Orders.Include(o => o.User).FirstOrDefaultAsync(orders => orders.OrderId == id);
       if(order is null){
-        return BadRequest();
+        return NotFound();
       }
       return order;
     }
@@ -44,7 +44,7 @@ public class OrderController : ControllerBase
     {
         var orders = await _dbContext.Orders.Where(o=>o.User.UserId == userId).Include(o => o.User).ToListAsync();
         if(orders is null){
-          return BadRequest();
+          return NotFound();
         }
         return orders;
     }
@@ -55,7 +55,7 @@ public class OrderController : ControllerBase
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync( u=> u.UserId == order.UserId);
         if(user is null){
-            return BadRequest();
+            return NotFound();
         }
 
         var newOrder = new Orders
