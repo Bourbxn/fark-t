@@ -163,14 +163,16 @@ const NewFark = () => {
           <br />
           <div className="flex gap-4 pb-10">
             <button
-              className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full"
+              className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full
+              border-teal-700 border-2 hover:text-teal-700 hover:bg-transparent  duration-500"
               onClick={submitForm}
             >
               FARK-T
             </button>
             <Link
               to="/"
-              className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
+              className="cursor-pointer bg-gray-500 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center
+              border-gray-500 border-2 hover:text-gray-500 hover:bg-transparent  duration-500"
             >
               <button>CANCEL</button>
             </Link>

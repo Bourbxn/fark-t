@@ -93,7 +93,8 @@ const Login = () => {
           <input
             type="submit"
             value="LOGIN"
-            className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full"
+            className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full
+            border-teal-700 border-2 hover:text-teal-700 hover:bg-transparent  duration-500"
           />
         </form>
         <div className="text-sm font-semibold text-center">

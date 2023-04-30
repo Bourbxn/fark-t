@@ -300,12 +300,14 @@ const MyOrderDetails = () => {
               <div className="flex gap-4 w-full px-10">
                 <Link
                   to={`/order/edit/${params.id}`}
-                  className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
+                  className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center
+                  border-teal-700 border-2 hover:text-teal-700 hover:bg-transparent  duration-500"
                 >
                   <button>EDIT ORDER</button>
                 </Link>
                 <button
-                  className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full"
+                  className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full
+                  border-rose-500 border-2 hover:text-rose-500 hover:bg-transparent  duration-500"
                   onClick={cancelOrder}
                 >
                   CANCEL ORDER

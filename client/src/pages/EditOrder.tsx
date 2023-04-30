@@ -124,7 +124,8 @@ const EditOrder = () => {
           <br />
           <div className="flex gap-4">
             <button
-              className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full"
+              className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full
+              border-teal-700 border-2 hover:text-teal-700 hover:bg-transparent  duration-500"
               onClick={submitForm}
             >
               EDIT ORDER
@@ -135,7 +136,8 @@ const EditOrder = () => {
                 Restaurant: order?.Restaurant,
                 Category: order?.Category,
               }}
-              className="w-full cursor-pointer bg-gray-500 px-5 py-3 text-white font-bold rounded flex justify-center items-center"
+              className="w-full cursor-pointer bg-gray-500 px-5 py-3 text-white font-bold rounded flex justify-center items-center
+              border-gray-500 border-2 hover:text-gray-500 hover:bg-transparent  duration-500"
             >
               <button>CANCEL</button>
             </Link>
