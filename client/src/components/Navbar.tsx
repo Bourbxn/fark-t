@@ -2,7 +2,7 @@ import { CgMenu, CgClose } from "react-icons/cg";
 import { MdOutlineNoFood } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { getToken, logout } from "../services/Authorize";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CgAddR } from "react-icons/cg";
 import { FaUserCircle, FaHistory } from "react-icons/fa";
 import { GiTwoCoins } from "react-icons/gi";
@@ -22,6 +22,9 @@ const Navbar: React.FC = () => {
   let [open, setOpen] = useState(false);
 
   const [user, setUser] = useState<User>();
+
+  const navbarStyle =
+    "text-teal-700 hover:text-teal-500 font-bold duration-500";
 
   const fetchData = () => {
     axios
@@ -76,12 +79,18 @@ const Navbar: React.FC = () => {
           )}
           {paths.map((path) => (
             <li key={path.key} className="md:ml-7 md:my-0 my-7">
-              <a
-                href={path.path}
-                className="text-teal-700 hover:text-teal-500 font-bold duration-500"
+              <NavLink
+                to={path.path}
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? `${navbarStyle} border-b-[2.5px] border-teal-700 p-1 hover:border-teal-500`
+                    : `${navbarStyle}`
+                }
               >
                 {path.name}
-              </a>
+              </NavLink>
             </li>
           ))}
           {!getUserdata("Username") && (

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdFoodBank, MdRestaurantMenu, MdCheckCircle } from "react-icons/md";
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -160,6 +160,40 @@ const MyOrderDetails = () => {
       });
   };
 
+  const cancelOrder = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Yes, Cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        confirmCancelOrder();
+      }
+    });
+  };
+
+  const confirmCancelOrder = () => {
+    axios
+      .delete(`${import.meta.env.VITE_APP_API}/order/delete/${params.id}`, {
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then(() => {
+        Swal.fire("Canceled!", "Your order has been canceled.", "success").then(
+          () => {
+            navigate("/");
+            navigate(0);
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -220,7 +254,7 @@ const MyOrderDetails = () => {
         </div>
         <div className="pt-4 pb-8">
           <div className="flex justify-center items-center">
-            {isAllOrdersReceived(farks) && (
+            {isAllOrdersReceived(farks) && farks.length !== 0 && (
               <button
                 className="bg-teal-600 text-white font-bold px-5 py-3 text-xl w-1/2 rounded shadow-lg hover:bg-teal-500 duration-500 
                   flex justify-center items-center gap-x-3"
@@ -232,7 +266,7 @@ const MyOrderDetails = () => {
                 CHECKOUT
               </button>
             )}
-            {!isAllOrdersReceived(farks) && (
+            {!isAllOrdersReceived(farks) && farks.length !== 0 && (
               <button
                 className="bg-gray-400 text-white font-bold px-5 py-3 text-xl w-1/2 rounded shadow-lg duration-500 cursor-auto 
                   flex justify-center items-center gap-x-3"
@@ -242,6 +276,22 @@ const MyOrderDetails = () => {
                 </span>
                 CHECKOUT
               </button>
+            )}
+            {farks.length === 0 && (
+              <div className="flex gap-4 w-full px-10">
+                <Link
+                  to="/fark"
+                  className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
+                >
+                  <button>EDIT ORDER</button>
+                </Link>
+                <button
+                  className="cursor-pointer bg-red-500 px-5 py-3 text-white font-bold rounded w-full"
+                  onClick={cancelOrder}
+                >
+                  CANCEL ORDER
+                </button>
+              </div>
             )}
           </div>
         </div>

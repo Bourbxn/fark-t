@@ -39,7 +39,7 @@ const OrderCard: React.FC<OrderProps> = ({
           </div>
         )}
         {getUserdata("Username") === owner && (
-          <div>
+          <div className="flex flex-col gap-y-1">
             <button className="md:text-3xl text-xl hover:text-teal-500 duration-500">
               <Link
                 to={`/myorder/${orderId}`}
