@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProtectedRoute from "../components/ProtectedRoute";
 import EditFark from "../pages/EditFark";
+import EditOrder from "../pages/EditOrder";
 import EditProfile from "../pages/EditProfile";
 import History from "../pages/History";
 import Home from "../pages/Home";
@@ -35,6 +36,15 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/order/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditOrder />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/fark"
           element={

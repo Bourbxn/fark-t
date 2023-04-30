@@ -7,10 +7,12 @@ import Swal from "sweetalert2";
 import OrderDetailsCard from "../components/OrderDetailsCard";
 import { getUserdata } from "../services/Userdata";
 import { getToken } from "../services/Authorize";
-import { FarkOrderDetails } from "../types/Types";
+import { FarkOrderDetails, Order } from "../types/Types";
 
 const MyOrderDetails = () => {
   const [farks, setFarks] = useState<FarkOrderDetails[]>([]);
+
+  const [order, setOrder] = useState<Order>();
 
   const params = useParams();
 
@@ -33,6 +35,22 @@ const MyOrderDetails = () => {
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+
+  const fetchOrder = () => {
+    axios
+      .get<Order>(`${import.meta.env.VITE_APP_API}/order/${params.id}`, {
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setOrder(response.data);
+      })
+      .catch((err) => {
+        alert(err);
       });
   };
 
@@ -196,6 +214,7 @@ const MyOrderDetails = () => {
 
   useEffect(() => {
     fetchData();
+    fetchOrder();
   }, []);
 
   return (
@@ -210,13 +229,13 @@ const MyOrderDetails = () => {
               <span className="md:text-3xl text-xl mr-3">
                 <MdFoodBank></MdFoodBank>
               </span>
-              {location?.state.Restaurant}
+              {order?.Restaurant}
             </div>
             <div className="flex items-center gap-x-1">
               <span className="md:text-3xl text-xl mr-3">
                 <MdRestaurantMenu></MdRestaurantMenu>
               </span>
-              {location?.state.Category}
+              {order?.Category}
             </div>
           </div>
           <div>
@@ -280,13 +299,13 @@ const MyOrderDetails = () => {
             {farks.length === 0 && (
               <div className="flex gap-4 w-full px-10">
                 <Link
-                  to="/fark"
+                  to={`/order/edit/${params.id}`}
                   className="cursor-pointer bg-teal-700 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
                 >
                   <button>EDIT ORDER</button>
                 </Link>
                 <button
-                  className="cursor-pointer bg-red-500 px-5 py-3 text-white font-bold rounded w-full"
+                  className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full"
                   onClick={cancelOrder}
                 >
                   CANCEL ORDER

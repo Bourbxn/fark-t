@@ -89,4 +89,18 @@ public class OrderController : ControllerBase
        await _dbContext.SaveChangesAsync();
        return NoContent();
    }
+
+    [HttpPut("order/update/{id}")]
+    public async Task<ActionResult> UpdateOrder(Guid id, UpdateOrderRequest orderRequest)
+    {
+      var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == id);
+      if(order is null){
+        return NotFound();
+      }
+      order.Restaurant = orderRequest.Restaurant;
+      order.Category = orderRequest.Category;
+      order.LimitAmount = orderRequest.LimitAmount;
+      await _dbContext.SaveChangesAsync();
+      return NoContent();
+    }
 }

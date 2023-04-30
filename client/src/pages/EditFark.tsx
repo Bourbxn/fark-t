@@ -157,7 +157,7 @@ const EditFark = () => {
             </button>
             <Link
               to="/fark"
-              className="cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
+              className="cursor-pointer bg-gray-500 px-5 py-3 text-white font-bold rounded w-full flex justify-center items-center"
             >
               <button>CANCEL</button>
             </Link>
