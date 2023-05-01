@@ -110,8 +110,8 @@ const NewOrder = () => {
             </button>
             <Link
               to="/"
-              className="w-full cursor-pointer bg-rose-500 px-5 py-3 text-white font-bold rounded flex justify-center items-center
-              border-rose-500 border-2 hover:text-rose-500 hover:bg-transparent  duration-500 "
+              className="w-full cursor-pointer bg-gray-500 px-5 py-3 text-white font-bold rounded flex justify-center items-center
+              border-gray-500 border-2 hover:text-gray-500 hover:bg-transparent  duration-500"
             >
               <button>CANCEL</button>
             </Link>

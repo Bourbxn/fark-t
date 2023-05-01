@@ -75,12 +75,16 @@ const EditProfile = () => {
     if (isInvalidForm()) {
       return;
     }
+    let newPwd = NewPassword;
+    if (newPwd === "") {
+      newPwd = Password;
+    }
     axios
       .put(
         `${import.meta.env.VITE_APP_API}/user/update/${getUserdata("Id")}`,
         {
           Telephone: Telephone,
-          Password: NewPassword,
+          Password: newPwd,
         },
         {
           headers: {
@@ -117,7 +121,7 @@ const EditProfile = () => {
             <div className="text-teal-800 font-semibold pb-1">Username</div>
             <input
               type="text"
-              className="rounded bg-gray-200 opacity-70 border-slate-300 border-[2px] py-2 px-3 w-full"
+              className="rounded bg-gray-200  border-slate-300 border-[2px] py-2 px-3 w-full"
               value={Username}
               disabled
             />

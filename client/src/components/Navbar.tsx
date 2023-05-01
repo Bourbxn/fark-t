@@ -69,12 +69,15 @@ const Navbar: React.FC = () => {
         >
           {getUserdata("Username") && (
             <li className="md:my-0 my-7">
-              <a
-                href="/neworder"
+              <Link
+                to="/neworder"
                 className="text-teal-700 hover:text-teal-500 font-bold duration-500 text-2xl"
+                onClick={() => {
+                  setOpen(false);
+                }}
               >
                 <CgAddR></CgAddR>
-              </a>
+              </Link>
             </li>
           )}
           {paths.map((path) => (
@@ -88,6 +91,9 @@ const Navbar: React.FC = () => {
                     ? `${navbarStyle} border-b-[2.5px] border-teal-700 p-1 hover:border-teal-500`
                     : `${navbarStyle}`
                 }
+                onClick={() => {
+                  setOpen(false);
+                }}
               >
                 {path.name}
               </NavLink>
@@ -121,6 +127,9 @@ const Navbar: React.FC = () => {
                   <Link
                     to="/profile"
                     className="text-teal-700 hover:text-teal-500"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
                     <span>
                       <RiUserSettingsFill></RiUserSettingsFill>
@@ -132,6 +141,9 @@ const Navbar: React.FC = () => {
                   <Link
                     to="/history"
                     className="text-teal-700 hover:text-teal-500"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
                     <span>
                       <FaHistory></FaHistory>

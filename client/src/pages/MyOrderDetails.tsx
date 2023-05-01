@@ -218,7 +218,7 @@ const MyOrderDetails = () => {
   }, []);
 
   return (
-    <div className="pt-48 md:pt-40 pb-20 px-10 flex justify-center items-start  min-h-screen bg-gray-100">
+    <div className="pt-32 md:pt-40 pb-20 px-10 flex justify-center items-start  min-h-screen bg-gray-100">
       <div className="bg-white rounded-lg space-y-5 shadow-lg w-[30rem]">
         <h1 className="text-center text-5xl text-teal-900 font-bold pt-6">
           My Order
