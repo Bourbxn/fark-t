@@ -49,7 +49,7 @@ public class AuthController : ControllerBase
                 jwt.Issuer,
                 jwt.Audience,
                 claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddDays(7),
                 signingCredentials: login
             );
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
