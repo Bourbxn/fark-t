@@ -24,6 +24,7 @@ edit profile and coin history.
 ![image](https://user-images.githubusercontent.com/86193685/235547686-f4b05921-91e2-4d67-8a56-648993e8164c.png)
 ![image](https://user-images.githubusercontent.com/86193685/235547714-0a3e54bb-0542-4488-80b3-c3c5f106c661.png)
 ![image](https://user-images.githubusercontent.com/86193685/235547834-9178130f-85bd-4140-8443-bf8d029f3e70.png)
+
 <br>
 
 ## Tech Stack
