@@ -24,16 +24,19 @@ edit profile and coin history.
 ![image](https://user-images.githubusercontent.com/86193685/235547686-f4b05921-91e2-4d67-8a56-648993e8164c.png)
 ![image](https://user-images.githubusercontent.com/86193685/235547714-0a3e54bb-0542-4488-80b3-c3c5f106c661.png)
 ![image](https://user-images.githubusercontent.com/86193685/235547834-9178130f-85bd-4140-8443-bf8d029f3e70.png)
+<br>
 
 ## Tech Stack
 - <b>Frontend</b> [React Typescript (Created by Vite)](https://vitejs.dev/)
 - <b>Backend</b>  [ASP.NET Core 6.0](https://dotnet.microsoft.com/en-us/apps/aspnet)
 - <b>Database</b> [MySQL](https://www.mysql.com/)
+<br>
 
 ## Requirement
 1. Yarn (1.22.xx)
 2. .NET CLI (6.0.xx)
 4. MySQL Tools
+<br>
 
 ## Setup Project
 #### 1. Clone project
@@ -81,6 +84,7 @@ yarn
 ```env
 VITE_APP_API=<backend-url>/api
 ```
+<br>
 
 ## Start Project
 #### 1. Backend
@@ -93,7 +97,7 @@ dotnet run
 cd client
 yarn dev
 ```
-#### 3. Enjoy kub!
+<br>
 
 ## Contributor
 
