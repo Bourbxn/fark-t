@@ -28,7 +28,7 @@ edit profile and coin history.
 <br>
 
 ## Tech Stack
-- <b>Frontend</b> [React Typescript (Created by Vite)](https://vitejs.dev/)
+- <b>Frontend</b> [React Typescript (Created by Vite)](https://vitejs.dev/) with [Tailwindcss](https://tailwindcss.com/)
 - <b>Backend</b>  [ASP.NET Core 6.0](https://dotnet.microsoft.com/en-us/apps/aspnet)
 - <b>Database</b> [MySQL](https://www.mysql.com/)
 <br>
