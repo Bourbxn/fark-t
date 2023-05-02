@@ -34,9 +34,12 @@ edit profile and coin history.
 <br>
 
 ## Requirement
-1. Yarn (1.22.xx)
-2. .NET CLI (6.0.xx)
-4. MySQL Tools
+1. [Yarn (1.22.xx)](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
+```bash
+npm install --global yarn
+```
+2. [.NET CLI (6.0.xx)](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+3. [MySQL Tools](https://www.mysql.com/products/workbench/)
 <br>
 
 ## Setup Project
@@ -98,6 +101,7 @@ dotnet run
 cd client
 yarn dev
 ```
+#### 3. Start project at ```http://localhost:5173/```
 <br>
 
 ## Contributor
